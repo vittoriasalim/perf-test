@@ -1,0 +1,209 @@
+name: autoscale
+dependencies: []
+automanagednamespaces: 0
+namespace:
+  number: 1
+  prefix: autoscale
+  deletestalenamespaces: true
+  deleteautomanagednamespaces: true
+  enableexistingnamespaces: true
+  deletenamespacetimeout: 600000000000
+steps:
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: Uniform1qps
+    objectbundle:
+    - basename: inflate
+      objecttemplatepath: deployment_template.yaml
+      templatefillmap:
+        CPUperJob: 346m
+        MemoryRequest: 100Mi
+        NodeSelector:
+          karpenter.sh/nodepool: default
+        OSType: linux
+        Replicas: 100
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Create deployment 0
+- phases: []
+  measurements:
+  - method: WaitForRunningPods
+    params:
+      action: start
+      countErrorMargin: 1
+      desiredPodCount: 100
+      labelSelector: app = inflate
+      refreshInterval: 5s
+      timeout: 30m
+    identifier: WaitForRunningPodsUp 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 50
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsUpPerc50 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 70
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsUpPerc70 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 90
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsUpPerc90 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 99
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsUpPerc99 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 100
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsUpPerc100 0
+    instances: []
+  - method: WaitForNodes
+    params:
+      action: gather
+      labelSelector: karpenter.sh/nodepool = default
+    identifier: MeasureNodesUpCount 0
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Measure nodes and pods scale up 0
+- phases: []
+  measurements:
+  - method: Sleep
+    params:
+      action: start
+      duration: 120s
+    identifier: WaitBeforeDelete
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: WaitBeforeDelete
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Uniform1qps
+    objectbundle:
+    - basename: inflate
+      objecttemplatepath: deployment_template.yaml
+      templatefillmap:
+        CPUperJob: 346m
+        MemoryRequest: 100Mi
+        OSType: linux
+        Replicas: 100
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Delete deployment 0
+- phases: []
+  measurements:
+  - method: WaitForRunningPods
+    params:
+      action: start
+      desiredPodCount: 0
+      labelSelector: app = inflate
+      refreshInterval: 5s
+      timeout: 10m
+    identifier: WaitForRunningPodsDown 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 0
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsDownPerc50 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 0
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsDownPerc70 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 0
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsDownPerc90 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 0
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsDownPerc99 0
+    instances: []
+  - method: WaitForRunningPods
+    params:
+      action: gather
+      desiredPodCount: 0
+      labelSelector: app = inflate
+    identifier: WaitForRunningPodsDownPerc100 0
+    instances: []
+  - method: WaitForNodes
+    params:
+      action: gather
+      labelSelector: karpenter.sh/nodepool = default
+    identifier: MeasureNodesDownCount 0
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Measure nodes and pods scale down 0
+- phases: []
+  measurements:
+  - method: Sleep
+    params:
+      action: start
+      duration: 120s
+    identifier: WaitBeforeCreate
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: WaitBeforeCreate
+tuningsets:
+- name: Uniform1qps
+  initialdelay: 0
+  qpsload:
+    qps: 1
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload: null
+  parallelismlimitedload: null
+  globalqpsload: null
+  poissonload: null
+chaosmonkey:
+  nodefailure: null
+  excludednodes: {}
