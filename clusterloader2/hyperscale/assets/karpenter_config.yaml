@@ -1,0 +1,48 @@
+apiVersion: karpenter.azure.com/v1alpha2
+kind: AKSNodeClass
+metadata:
+  name: default
+  annotations:
+    kubernetes.io/description: "General purpose AKSNodeClass for running Ubuntu2204\
+      \ nodes"
+spec:
+  imageFamily: Ubuntu2204
+---
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: default
+  annotations:
+    kubernetes.io/description: "General purpose On-Demand NodePool"
+spec:
+  disruption:
+    consolidationPolicy: WhenEmpty
+    consolidateAfter: 1m
+    budgets:
+      - nodes: "100%"
+  template:
+    spec:
+      nodeClassRef:
+        group: karpenter.azure.com
+        kind: AKSNodeClass
+        name: default
+      expireAfter: Never
+      requirements:
+        - key: kubernetes.io/os
+          operator: In
+          values: ["linux"]
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["on-demand"]
+        - key: karpenter.azure.com/sku-name
+          operator: In
+          values:
+            - "Standard_D96ds_v5" # TODO: adjust based on available SKUs in the region
+            - "Standard_D96d_v5"  # make sure SKU supports all zones
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values:
+            - eastus2-1 # static node pools across all zones
+            - eastus2-2
+            - eastus2-3
+
