@@ -47,7 +47,7 @@ import (
 
 const (
 	namespace                    = "monitoring"
-	storageClass                 = "ssd"
+	storageClass                 = "managed"
 	checkPrometheusReadyInterval = 30 * time.Second
 	numK8sClients                = 1
 	monitoringServiceAccount     = "monitoringserviceaccount"

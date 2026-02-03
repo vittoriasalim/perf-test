@@ -4,7 +4,7 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: ssd
+  name: managed
 provisioner: {{$PROMETHEUS_STORAGE_CLASS_PROVISIONER}}
 {{if eq $PROMETHEUS_STORAGE_CLASS_PROVISIONER "kubernetes.io/azure-disk"}}
 parameters:

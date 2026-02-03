@@ -18,9 +18,9 @@
 {{$SMALL_GROUP_SIZE := DefaultParam .SMALL_GROUP_SIZE 5}}
 {{$SMALL_STATEFUL_SETS_PER_NAMESPACE := DefaultParam .SMALL_STATEFUL_SETS_PER_NAMESPACE 1}}
 {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE := DefaultParam .MEDIUM_STATEFUL_SETS_PER_NAMESPACE 1}}
-
-
-
+{{$ENABLE_CHAOSMONKEY := DefaultParam .ENABLE_CHAOSMONKEY false}}
+{{$ENABLE_API_AVAILABILITY_MEASUREMENT := DefaultParam .CL2_ENABLE_API_AVAILABILITY_MEASUREMENT false}}
+{{$ENABLE_NETWORK_POLICY_ENFORCEMENT_LATENCY_TEST := DefaultParam .CL2_ENABLE_NETWORK_POLICY_ENFORCEMENT_LATENCY_TEST false}}
 {{$RANDOM_SCALE_FACTOR := 0.5}}
 #Variables
 {{$namespaces := DivideInt .Nodes $NODES_PER_NAMESPACE}}
@@ -28,12 +28,12 @@
 {{$podsPerNamespace := DivideInt $totalPods $namespaces}}
 {{$saturationTime := DivideInt $totalPods $LOAD_TEST_THROUGHPUT}}
 {{$deletionTime := DivideInt $totalPods $DELETE_TEST_THROUGHPUT}}
-# bigDeployments - 1/4 of namespace pods should be in big Deployments.
-{{$bigDeploymentsPerNamespace := DivideInt $podsPerNamespace (MultiplyInt 4 $BIG_GROUP_SIZE)}}
-# mediumDeployments - 1/4 of namespace pods should be in medium Deployments.
-{{$mediumDeploymentsPerNamespace := DivideInt $podsPerNamespace (MultiplyInt 4 $MEDIUM_GROUP_SIZE)}}
-# smallDeployments - 1/2 of namespace pods should be in small Deployments.
-{{$smallDeploymentsPerNamespace := DivideInt $podsPerNamespace (MultiplyInt 2 $SMALL_GROUP_SIZE)}}
+# bigDeployments - calculate to split deployments 50/50 with jobs
+{{$bigDeploymentsPerNamespace := DivideInt (DivideInt $podsPerNamespace 2) $BIG_GROUP_SIZE}}
+# mediumDeployments - disabled
+{{$mediumDeploymentsPerNamespace := 0}}
+# smallDeployments - disabled
+{{$smallDeploymentsPerNamespace := 0}}
 
 # Stateful sets are enabled. Reduce the number of small and medium deployments per namespace
 # See https://github.com/kubernetes/perf-tests/issues/1036#issuecomment-607631768
@@ -68,10 +68,18 @@
 {{$schedulerThroughputNamespaces := IfThenElse $IS_SMALL_CLUSTER 1 $schedulerThroughputNamespaces}}
 # END scheduler-throughput section
 
+# Command to be executed
+{{$EXEC_COMMAND := DefaultParam .CL2_EXEC_COMMAND nil}}
+{{$EXIT_AFTER_EXEC := DefaultParam .CL2_EXIT_AFTER_EXEC false}}
+{{$EXEC_TIMEOUT := DefaultParam .CL2_EXEC_TIMEOUT "3600s"}}
+{{$SLEEP_AFTER_EXEC_DURATION := DefaultParam .CL2_SLEEP_AFTER_EXEC_DURATION "0s"}}
+
 {{$registry := DefaultParam .CL2_LATENCY_POD_REGISTRY "registry.k8s.io"}}
 {{$latencyPodImage := DefaultParam .CL2_LATENCY_POD_IMAGE (Concat $registry "/pause:3.9")}}
 {{$defaultQps := DefaultParam .CL2_DEFAULT_QPS (IfThenElse (le .Nodes 500) 10 100)}}
 
+{{$ADDITIONAL_MEASUREMENT_MODULES := DefaultParam .CL2_ADDITIONAL_MEASUREMENT_MODULES nil}}
+{{$ADDITIONAL_PHASES_MODULES := DefaultParam .CL2_ADDITIONAL_PHASES_MODULES nil}}
 
 name: load
 namespace:
@@ -102,17 +110,47 @@ tuningSets:
 - name: RandomizedDeletionTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$deletionTime}}s
-
+{{if $ENABLE_CHAOSMONKEY}}
+chaosMonkey:
+  nodeFailure:
+    failureRate: 0.01
+    interval: 5m
+    jitterFactor: 2.0
+    simulatedDowntime: 10m
+{{end}}
 steps:
 - module:
     path: /modules/measurements.yaml
     params:
       action: start
 
+{{if $ADDITIONAL_MEASUREMENT_MODULES}}
+{{range $ADDITIONAL_MEASUREMENT_MODULES}}
+- module:
+    path: {{.}}
+    params:ace {}{"actionName":"Creating", "bigServicesPerNamespace":6, "mediumServicesPerNamespace":6, "namespaces":1, "smallServicesPerNamespace":13}}: reading error: open testing/load/modules/services/config.yaml: no such file or directory]
+exit status 1
+      action: start
+{{end}}
+{{end}}
+- module:
+    path: /prometheus/kube-apiserver.yaml
+    params:
+      action: start
+
+{{if $ENABLE_NETWORK_POLICY_ENFORCEMENT_LATENCY_TEST}}
+- module:
+    path: modules/network-policy/net-policy-enforcement-latency.yaml
+    params:
+      setup: true
+      run: true
+      testType: "pod-creation"
+{{end}}
+
 - module:
     path: modules/services.yaml
     params:
-      actionName: "Creating"
+      actionName: "Creating Pods"
       namespaces: {{$namespaces}}
       smallServicesPerNamespace: {{DivideInt (AddInt $smallDeploymentsPerNamespace 1) 2}}
       mediumServicesPerNamespace: {{DivideInt (AddInt $mediumDeploymentsPerNamespace 1) 2}}
@@ -126,8 +164,8 @@ steps:
       - basename: daemonset-priorityclass
         objectTemplatePath: daemonset-priorityclass.yaml
 
-# Moved from reconcile-objects/config.yaml to mitigate https://github.com/kubernetes/kubernetes/issues/96635.
-# TODO(https://github.com/kubernetes/perf-tests/issues/1823): Merge back to reconcile-objects/config.yaml once the k/k bug is fixed.
+# Moved from reconcile-objects.yaml to mitigate https://github.com/kubernetes/kubernetes/issues/96635.
+# TODO(https://github.com/kubernetes/perf-tests/issues/1823): Merge back to reconcile-objects.yaml once the k/k bug is fixed.
 - module:
     path: /modules/configmaps-secrets.yaml
     params:
@@ -179,8 +217,16 @@ steps:
       smallJobSize: {{$SMALL_GROUP_SIZE}}
       smallJobsPerNamespace: 1
 
+{{if $ADDITIONAL_PHASES_MODULES}}
+{{range $ADDITIONAL_PHASES_MODULES}}
+- module:
+    path: {{.}}
+    params:
+      action: "create"
+{{end}}
+{{end}}
 
-
+{{if not $IS_SMALL_CLUSTER}}
 # BEGIN scheduler throughput
 - module:
     path: modules/scheduler-throughput.yaml
@@ -191,7 +237,53 @@ steps:
       schedulerThroughputNamespaces: {{$schedulerThroughputNamespaces}}
       schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
       deploymentImage: {{$latencyPodImage}}
+{{end}}
 
+- module:
+    path: modules/dns-k8s-hostnames.yaml
+
+{{if $EXEC_COMMAND}}
+
+{{if $ENABLE_API_AVAILABILITY_MEASUREMENT}}
+- name: Pausing APIAvailability measurement
+  measurements:
+  - Identifier: APIAvailability
+    Method: APIAvailability
+    Params:
+      action: pause
+{{end}}
+
+- name: Exec command
+  measurements:
+  - Identifier: ExecCommand
+    Method: Exec
+    Params:
+      timeout: {{$EXEC_TIMEOUT}}
+      command:
+      {{range $EXEC_COMMAND}}
+      - {{.}}
+      {{end}}
+
+{{if $ENABLE_API_AVAILABILITY_MEASUREMENT}}
+- name: Unpausing APIAvailability measurement
+  measurements:
+  - Identifier: APIAvailability
+    Method: APIAvailability
+    Params:
+      action: unpause
+{{end}}
+
+- name: Sleep
+  measurements:
+  - Identifier: WaitAfterExec
+    Method: Sleep
+    Params:
+      duration: {{$SLEEP_AFTER_EXEC_DURATION}}
+{{end}}
+
+{{if not $EXIT_AFTER_EXEC}}
+
+{{if not $IS_SMALL_CLUSTER}}
 - module:
     path: modules/scheduler-throughput.yaml
     params:
@@ -200,9 +292,38 @@ steps:
       replicasPerNamespace: 0
       schedulerThroughputNamespaces: {{$schedulerThroughputNamespaces}}
       schedulerThroughputPodsPerDeployment: {{$schedulerThroughputPodsPerDeployment}}
+# END scheduler throughput
+{{end}}
 
+{{if not $IS_SMALL_CLUSTER}}
+# TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
+- module:
+    path: modules/pod-startup-latency.yaml
+    params:
+      namespaces: {{$namespaces}}
+      minPodsInSmallCluster: {{$MIN_PODS_IN_SMALL_CLUSTERS}}
+      image: {{$latencyPodImage}}
+{{end}}
 
+{{if $ENABLE_NETWORK_POLICY_ENFORCEMENT_LATENCY_TEST}}
+- module:
+    path: modules/network-policy/net-policy-metrics.yaml
+    params:
+      action: gather
+      usePolicyCreationMetrics: false
 
+- module:
+    path: modules/network-policy/net-policy-enforcement-latency.yaml
+    params:
+      complete: true
+      testType: "pod-creation"
+
+- module:
+    path: modules/network-policy/net-policy-enforcement-latency.yaml
+    params:
+      run: true
+      testType: "policy-creation"
+{{end}}
 
 - module:
     path: /modules/reconcile-objects.yaml
@@ -241,6 +362,15 @@ steps:
       smallJobSize: {{$SMALL_GROUP_SIZE}}
       smallJobsPerNamespace: 1
 
+{{if $ADDITIONAL_PHASES_MODULES}}
+{{range $ADDITIONAL_PHASES_MODULES}}
+- module:
+    path: {{.}}
+    params:
+      action: "scale and update"
+{{end}}
+{{end}}
+
 - module:
     path: /modules/reconcile-objects.yaml
     params:
@@ -278,6 +408,14 @@ steps:
       pvSmallStatefulSetSize: {{$SMALL_STATEFUL_SETS_PER_NAMESPACE}}
       pvMediumStatefulSetSize: {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE}}
 
+{{if $ADDITIONAL_PHASES_MODULES}}
+{{range $ADDITIONAL_PHASES_MODULES}}
+- module:
+    path: {{.}}
+    params:
+      action: "delete"
+{{end}}
+{{end}}
 
 - module:
     path: /modules/configmaps-secrets.yaml
@@ -298,14 +436,14 @@ steps:
           objectTemplatePath: daemonset-priorityclass.yaml
 
 - module:
-    path: /modules/services.yaml
+    path: modules/services.yaml
     params:
       actionName: "Deleting"
       namespaces: {{$namespaces}}
       smallServicesPerNamespace: 0
       mediumServicesPerNamespace: 0
       bigServicesPerNamespace: 0
-
+{{end}} # not EXIT_AFTER_EXEC
 
 - module:
     path: /modules/measurements.yaml
@@ -313,4 +451,19 @@ steps:
       action: gather
 
 
+{{if $ADDITIONAL_MEASUREMENT_MODULES}}
+{{range $ADDITIONAL_MEASUREMENT_MODULES}}
+- module:
+    path: {{.}}
+    params:
+      action: gather
+{{end}}
+{{end}}
 
+{{if $ENABLE_NETWORK_POLICY_ENFORCEMENT_LATENCY_TEST}}
+- module:
+    path: modules/network-policy/net-policy-enforcement-latency.yaml
+    params:
+      complete: true
+      testType: "policy-creation"
+{{end}}

@@ -1,0 +1,1327 @@
+name: load
+dependencies: []
+automanagednamespaces: 0
+namespace:
+  number: 2
+  prefix: test-3ju9zs
+  deletestalenamespaces: false
+  deleteautomanagednamespaces: true
+  enableexistingnamespaces: false
+  deletenamespacetimeout: 600000000000
+steps:
+- phases: []
+  measurements:
+  - method: GenericPrometheusQuery
+    params:
+      action: start
+      metricName: EtcdMetrics
+      metricVersion: v1
+      queries:
+      - name: apiserver_storage_size_min
+        query: min_over_time(apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_avg
+        query: avg_over_time(apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_p50
+        query: quantile_over_time(0.50, apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_p90
+        query: quantile_over_time(0.90, apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_p99
+        query: quantile_over_time(0.99, apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_max
+        query: max_over_time(apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      unit: bytes
+    identifier: EtcdMetrics Cluster Database Size
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: starting measurements
+- phases: []
+  measurements:
+  - method: GenericPrometheusQuery
+    params:
+      action: start
+      metricName: APIServerConcurrency
+      metricVersion: v1
+      queries:
+      - name: inflight_readonly_min
+        query: min_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_p50
+        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_p90
+        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_p99
+        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_avg
+        query: avg_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_max
+        query: max_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_min
+        query: min_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_p50
+        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_p90
+        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_p99
+        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_avg
+        query: avg_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_max
+        query: max_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      unit: req
+    identifier: APIServerInflights
+    instances: []
+  - method: GenericPrometheusQuery
+    params:
+      action: start
+      metricName: APIServerInqueue
+      metricVersion: v1
+      queries:
+      - name: inqueue_readonly_min
+        query: min_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_p50
+        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_p90
+        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_p99
+        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_avg
+        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_max
+        query: max_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_min
+        query: min_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_p50
+        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_p90
+        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_p99
+        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_avg
+        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_max
+        query: max_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      unit: req
+    identifier: APIServerInqueues
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: starting API server concurrency measurements
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 66
+    tuningset: Sequence
+    objectbundle:
+    - basename: big-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 66
+    tuningset: Sequence
+    objectbundle:
+    - basename: medium-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 133
+    tuningset: Sequence
+    objectbundle:
+    - basename: small-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Creating k8s services
+- phases:
+  - namespacerange: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: Sequence
+    objectbundle:
+    - basename: daemonset-priorityclass
+      objecttemplatepath: daemonset-priorityclass.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Creating PriorityClass for DaemonSets
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 132
+    tuningset: default
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: big-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 132
+    tuningset: default
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 265
+    tuningset: default
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: create objects configmaps and secrets
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: start
+      checkIfPodsAreUpdated: true
+      labelSelector: group = load
+      operationTimeout: 15m
+    identifier: ""
+    instances:
+    - identifier: WaitForRunningDeployments
+      params:
+        apiVersion: apps/v1
+        kind: Deployment
+    - identifier: WaitForRunningStatefulSets
+      params:
+        apiVersion: apps/v1
+        kind: StatefulSet
+    - identifier: WaitForRunningDaemonSets
+      params:
+        apiVersion: apps/v1
+        kind: DaemonSet
+    - identifier: WaitForRunningJobs
+      params:
+        apiVersion: batch/v1
+        kind: Job
+  module:
+    path: ""
+    params: {}
+  name: Starting measurement for 'create objects'
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: daemonset
+      objecttemplatepath: daemonset.yaml
+      templatefillmap:
+        Env: before update
+        Image: registry.k8s.io/pause:3.9
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 132
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+        SvcName: big-service
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 132
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+        SvcName: medium-service
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 265
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        EnableNetworkPolicyEnforcementLatencyTest: false
+        Image: registry.k8s.io/pause:3.9
+        NetPolServerOnEveryNthPod: 3
+        ReplicasMax: 3
+        ReplicasMin: 3
+        SvcName: small-service
+        TargetLabelKey: net-pol-test
+        TargetLabelValue: enforcement-latency
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: small-statefulset
+      objecttemplatepath: statefulset_service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-statefulset
+      objecttemplatepath: statefulset.yaml
+      templatefillmap:
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: medium-statefulset
+      objecttemplatepath: statefulset_service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-statefulset
+      objecttemplatepath: statefulset.yaml
+      templatefillmap:
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: small-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: medium-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedSaturationTimeLimited
+    objectbundle:
+    - basename: big-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: create objects
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: gather
+    identifier: ""
+    instances:
+    - identifier: WaitForRunningDeployments
+      params: {}
+    - identifier: WaitForRunningStatefulSets
+      params: {}
+    - identifier: WaitForRunningDaemonSets
+      params: {}
+    - identifier: WaitForRunningJobs
+      params: {}
+  module:
+    path: ""
+    params: {}
+  name: Waiting for 'create objects' to be completed
+- phases: []
+  measurements:
+  - method: PodStartupLatency
+    params:
+      action: start
+      labelSelector: group = scheduler-throughput
+      threshold: 1h
+    identifier: HighThroughputPodStartupLatency
+    instances: []
+  - method: WaitForControlledPodsRunning
+    params:
+      action: start
+      apiVersion: apps/v1
+      checkIfPodsAreUpdated: true
+      kind: Deployment
+      labelSelector: group = scheduler-throughput
+      operationTimeout: 20m
+    identifier: WaitForSchedulerThroughputDeployments
+    instances: []
+  - method: SchedulingThroughput
+    params:
+      action: start
+      labelSelector: group = scheduler-throughput
+      measurmentInterval: 1s
+    identifier: SchedulingThroughput
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Creating scheduler throughput measurements
+- phases:
+  - namespacerange:
+      min: 2
+      max: 2
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: default
+    objectbundle:
+    - basename: scheduler-throughput-deployment
+      objecttemplatepath: simple-deployment.yaml
+      templatefillmap:
+        Group: scheduler-throughput
+        Image: registry.k8s.io/pause:3.9
+        Replicas: 1000
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: create scheduler throughput pods
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: gather
+    identifier: WaitForSchedulerThroughputDeployments
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Waiting for scheduler throughput pods to be created
+- phases: []
+  measurements:
+  - method: PodStartupLatency
+    params:
+      action: gather
+    identifier: HighThroughputPodStartupLatency
+    instances: []
+  - method: SchedulingThroughput
+    params:
+      action: gather
+      enableViolations: true
+      threshold: 100
+    identifier: SchedulingThroughput
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Collecting scheduler throughput measurements
+- phases:
+  - namespacerange:
+      min: 2
+      max: 2
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: scheduler-throughput-deployment
+      objecttemplatepath: simple-deployment.yaml
+      templatefillmap:
+        Group: scheduler-throughput
+        Image: registry.k8s.io/pause:3.9
+        Replicas: 1000
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: delete scheduler throughput pods
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: gather
+    identifier: WaitForSchedulerThroughputDeployments
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Waiting for scheduler throughput pods to be deleted
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: start
+      checkIfPodsAreUpdated: true
+      labelSelector: group = load
+      operationTimeout: 15m
+    identifier: ""
+    instances:
+    - identifier: WaitForRunningDeployments
+      params:
+        apiVersion: apps/v1
+        kind: Deployment
+    - identifier: WaitForRunningStatefulSets
+      params:
+        apiVersion: apps/v1
+        kind: StatefulSet
+    - identifier: WaitForRunningDaemonSets
+      params:
+        apiVersion: apps/v1
+        kind: DaemonSet
+    - identifier: WaitForRunningJobs
+      params:
+        apiVersion: batch/v1
+        kind: Job
+  module:
+    path: ""
+    params: {}
+  name: Starting measurement for 'scale and update objects'
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: daemonset
+      objecttemplatepath: daemonset.yaml
+      templatefillmap:
+        Env: after update
+        Image: registry.k8s.io/pause:3.9
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 132
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+        SvcName: big-service
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 132
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+        SvcName: medium-service
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 265
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        EnableNetworkPolicyEnforcementLatencyTest: false
+        Image: registry.k8s.io/pause:3.9
+        NetPolServerOnEveryNthPod: 3
+        ReplicasMax: 4
+        ReplicasMin: 1
+        SvcName: small-service
+        TargetLabelKey: net-pol-test
+        TargetLabelValue: enforcement-latency
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: small-statefulset
+      objecttemplatepath: statefulset_service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-statefulset
+      objecttemplatepath: statefulset.yaml
+      templatefillmap:
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: medium-statefulset
+      objecttemplatepath: statefulset_service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-statefulset
+      objecttemplatepath: statefulset.yaml
+      templatefillmap:
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: small-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: medium-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: RandomizedScalingTimeLimited
+    objectbundle:
+    - basename: big-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 4
+        ReplicasMin: 1
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: scale and update objects
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: gather
+    identifier: ""
+    instances:
+    - identifier: WaitForRunningDeployments
+      params: {}
+    - identifier: WaitForRunningStatefulSets
+      params: {}
+    - identifier: WaitForRunningDaemonSets
+      params: {}
+    - identifier: WaitForRunningJobs
+      params: {}
+  module:
+    path: ""
+    params: {}
+  name: Waiting for 'scale and update objects' to be completed
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: start
+      checkIfPodsAreUpdated: true
+      labelSelector: group = load
+      operationTimeout: 15m
+    identifier: ""
+    instances:
+    - identifier: WaitForRunningDeployments
+      params:
+        apiVersion: apps/v1
+        kind: Deployment
+    - identifier: WaitForRunningStatefulSets
+      params:
+        apiVersion: apps/v1
+        kind: StatefulSet
+    - identifier: WaitForRunningDaemonSets
+      params:
+        apiVersion: apps/v1
+        kind: DaemonSet
+    - identifier: WaitForRunningJobs
+      params:
+        apiVersion: batch/v1
+        kind: Job
+  module:
+    path: ""
+    params: {}
+  name: Starting measurement for 'delete objects'
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: daemonset
+      objecttemplatepath: daemonset.yaml
+      templatefillmap:
+        Env: <no value>
+        Image: registry.k8s.io/pause:3.9
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+        SvcName: big-service
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+        SvcName: medium-service
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: deployment.yaml
+      templatefillmap:
+        EnableDNSTests: false
+        EnableNetworkPolicyEnforcementLatencyTest: false
+        Image: registry.k8s.io/pause:3.9
+        NetPolServerOnEveryNthPod: 3
+        ReplicasMax: 3
+        ReplicasMin: 3
+        SvcName: small-service
+        TargetLabelKey: net-pol-test
+        TargetLabelValue: enforcement-latency
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: small-statefulset
+      objecttemplatepath: statefulset_service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-statefulset
+      objecttemplatepath: statefulset.yaml
+      templatefillmap:
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: medium-statefulset
+      objecttemplatepath: statefulset_service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-statefulset
+      objecttemplatepath: statefulset.yaml
+      templatefillmap:
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: small-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: medium-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle:
+    - basename: big-job
+      objecttemplatepath: job.yaml
+      templatefillmap:
+        Completions: 9
+        Image: registry.k8s.io/pause:3.9
+        ReplicasMax: 3
+        ReplicasMin: 3
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle: []
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: RandomizedDeletionTimeLimited
+    objectbundle: []
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: delete objects
+- phases: []
+  measurements:
+  - method: WaitForControlledPodsRunning
+    params:
+      action: gather
+    identifier: ""
+    instances:
+    - identifier: WaitForRunningDeployments
+      params: {}
+    - identifier: WaitForRunningStatefulSets
+      params: {}
+    - identifier: WaitForRunningDaemonSets
+      params: {}
+    - identifier: WaitForRunningJobs
+      params: {}
+  - method: WaitForBoundPVCs
+    params:
+      desiredPVCCount: 0
+      labelSelector: group = load
+      timeout: 15m
+    identifier: WaitForPVCsToBeDeleted
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: Waiting for 'delete objects' to be completed
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: big-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: delete objects configmaps and secrets
+- phases:
+  - namespacerange: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: daemonset-priorityclass
+      objecttemplatepath: daemonset-priorityclass.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Deleting PriorityClass for DaemonSets
+- phases:
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: big-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: medium-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 1
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: small-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Deleting k8s services
+- phases: []
+  measurements:
+  - method: GenericPrometheusQuery
+    params:
+      action: gather
+      metricName: EtcdMetrics
+      metricVersion: v1
+      queries:
+      - name: apiserver_storage_size_min
+        query: min_over_time(apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_avg
+        query: avg_over_time(apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_p50
+        query: quantile_over_time(0.50, apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_p90
+        query: quantile_over_time(0.90, apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_p99
+        query: quantile_over_time(0.99, apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      - name: apiserver_storage_size_max
+        query: max_over_time(apiserver_storage_size_bytes[5m])
+        requireSamples: false
+      unit: bytes
+    identifier: EtcdMetrics Cluster Database Size
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: gathering measurements
+- phases: []
+  measurements:
+  - method: GenericPrometheusQuery
+    params:
+      action: gather
+      metricName: APIServerConcurrency
+      metricVersion: v1
+      queries:
+      - name: inflight_readonly_min
+        query: min_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_p50
+        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_p90
+        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_p99
+        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_avg
+        query: avg_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_readonly_max
+        query: max_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_min
+        query: min_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_p50
+        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_p90
+        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_p99
+        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_avg
+        query: avg_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inflight_mutating_max
+        query: max_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      unit: req
+    identifier: APIServerInflights
+    instances: []
+  - method: GenericPrometheusQuery
+    params:
+      action: gather
+      metricName: APIServerInqueue
+      metricVersion: v1
+      queries:
+      - name: inqueue_readonly_min
+        query: min_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_p50
+        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_p90
+        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_p99
+        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_avg
+        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_readonly_max
+        query: max_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_min
+        query: min_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_p50
+        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_p90
+        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_p99
+        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_avg
+        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      - name: inqueue_mutating_max
+        query: max_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+        requireSamples: false
+      unit: req
+    identifier: APIServerInqueues
+    instances: []
+  module:
+    path: ""
+    params: {}
+  name: gathering API server concurrency measurements
+tuningsets:
+- name: Sequence
+  initialdelay: 0
+  qpsload: null
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload: null
+  parallelismlimitedload:
+    parallelismlimit: 1
+  globalqpsload: null
+  poissonload: null
+- name: Uniform5qps
+  initialdelay: 0
+  qpsload:
+    qps: 5
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload: null
+  parallelismlimitedload: null
+  globalqpsload: null
+  poissonload: null
+- name: default
+  initialdelay: 0
+  qpsload: null
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload: null
+  parallelismlimitedload: null
+  globalqpsload:
+    qps: 10
+    burst: 1
+  poissonload: null
+- name: RandomizedSaturationTimeLimited
+  initialdelay: 0
+  qpsload: null
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload:
+    timelimit: 160000000000
+  parallelismlimitedload: null
+  globalqpsload: null
+  poissonload: null
+- name: RandomizedScalingTimeLimited
+  initialdelay: 0
+  qpsload: null
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload:
+    timelimit: 40000000000
+  parallelismlimitedload: null
+  globalqpsload: null
+  poissonload: null
+- name: RandomizedDeletionTimeLimited
+  initialdelay: 0
+  qpsload: null
+  randomizedload: null
+  steppedload: null
+  timelimitedload: null
+  randomizedtimelimitedload:
+    timelimit: 160000000000
+  parallelismlimitedload: null
+  globalqpsload: null
+  poissonload: null
+chaosmonkey:
+  nodefailure: null
+  excludednodes: {}

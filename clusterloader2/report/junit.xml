@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <testsuite name="ClusterLoaderV2" tests="0" failures="0" errors="0" time="813.563">
+      <testcase name="load overall (./testing/load/config.yaml)" classname="ClusterLoaderV2" time="813.538345129"></testcase>
+      <testcase name="load: [step: 01] starting measurements [00] - EtcdMetrics Cluster Database Size" classname="ClusterLoaderV2" time="0.830660125"></testcase>
+      <testcase name="load: [step: 02] starting API server concurrency measurements [00] - APIServerInflights" classname="ClusterLoaderV2" time="0.292060677"></testcase>
+      <testcase name="load: [step: 02] starting API server concurrency measurements [01] - APIServerInqueues" classname="ClusterLoaderV2" time="0.292073381"></testcase>
+      <testcase name="load: [step: 03] Creating k8s services" classname="ClusterLoaderV2" time="36.772136696"></testcase>
+      <testcase name="load: [step: 04] Creating PriorityClass for DaemonSets" classname="ClusterLoaderV2" time="0.297044242"></testcase>
+      <testcase name="load: [step: 05] create objects configmaps and secrets" classname="ClusterLoaderV2" time="53.217115161"></testcase>
+      <testcase name="load: [step: 06] Starting measurement for &#39;create objects&#39; [00] - " classname="ClusterLoaderV2" time="3.342595259"></testcase>
+      <testcase name="load: [step: 07] create objects" classname="ClusterLoaderV2" time="159.956624315"></testcase>
+      <testcase name="load: [step: 08] Waiting for &#39;create objects&#39; to be completed [00] - " classname="ClusterLoaderV2" time="13.425813347"></testcase>
+      <testcase name="load: [step: 09] Creating scheduler throughput measurements [00] - HighThroughputPodStartupLatency" classname="ClusterLoaderV2" time="0.653402333"></testcase>
+      <testcase name="load: [step: 09] Creating scheduler throughput measurements [01] - WaitForSchedulerThroughputDeployments" classname="ClusterLoaderV2" time="0.654678224"></testcase>
+      <testcase name="load: [step: 09] Creating scheduler throughput measurements [02] - SchedulingThroughput" classname="ClusterLoaderV2" time="0.604440054"></testcase>
+      <testcase name="load: [step: 10] create scheduler throughput pods" classname="ClusterLoaderV2" time="0.223485204"></testcase>
+      <testcase name="load: [step: 11] Waiting for scheduler throughput pods to be created [00] - WaitForSchedulerThroughputDeployments" classname="ClusterLoaderV2" time="55.175056733"></testcase>
+      <testcase name="load: [step: 12] Collecting scheduler throughput measurements [00] - HighThroughputPodStartupLatency" classname="ClusterLoaderV2" time="3.362301221"></testcase>
+      <testcase name="load: [step: 12] Collecting scheduler throughput measurements [01] - SchedulingThroughput" classname="ClusterLoaderV2" time="0.322069903"></testcase>
+      <testcase name="load: [step: 13] delete scheduler throughput pods" classname="ClusterLoaderV2" time="0.200784635"></testcase>
+      <testcase name="load: [step: 14] Waiting for scheduler throughput pods to be deleted [00] - WaitForSchedulerThroughputDeployments" classname="ClusterLoaderV2" time="100.052151021"></testcase>
+      <testcase name="load: [step: 15] Starting measurement for &#39;scale and update objects&#39; [00] - " classname="ClusterLoaderV2" time="0.735791893"></testcase>
+      <testcase name="load: [step: 16] scale and update objects" classname="ClusterLoaderV2" time="40.236165102"></testcase>
+      <testcase name="load: [step: 17] Waiting for &#39;scale and update objects&#39; to be completed [00] - " classname="ClusterLoaderV2" time="28.635485165"></testcase>
+      <testcase name="load: [step: 18] Starting measurement for &#39;delete objects&#39; [00] - " classname="ClusterLoaderV2" time="0.349679054"></testcase>
+      <testcase name="load: [step: 19] delete objects" classname="ClusterLoaderV2" time="160.157153888"></testcase>
+      <testcase name="load: [step: 20] Waiting for &#39;delete objects&#39; to be completed [00] - " classname="ClusterLoaderV2" time="25.423472019"></testcase>
+      <testcase name="load: [step: 20] Waiting for &#39;delete objects&#39; to be completed [01] - WaitForPVCsToBeDeleted" classname="ClusterLoaderV2" time="6.066480268"></testcase>
+      <testcase name="load: [step: 21] delete objects configmaps and secrets" classname="ClusterLoaderV2" time="53.214869442"></testcase>
+      <testcase name="load: [step: 22] Deleting PriorityClass for DaemonSets" classname="ClusterLoaderV2" time="0.2042045"></testcase>
+      <testcase name="load: [step: 23] Deleting k8s services" classname="ClusterLoaderV2" time="38.501851795"></testcase>
+      <testcase name="load: [step: 24] gathering measurements [00] - EtcdMetrics Cluster Database Size" classname="ClusterLoaderV2" time="2.969828918"></testcase>
+      <testcase name="load: [step: 25] gathering API server concurrency measurements [00] - APIServerInflights" classname="ClusterLoaderV2" time="3.5235394429999998"></testcase>
+      <testcase name="load: [step: 25] gathering API server concurrency measurements [01] - APIServerInqueues" classname="ClusterLoaderV2" time="3.523472414"></testcase>
+  </testsuite>

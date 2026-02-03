@@ -1,0 +1,100 @@
+# Module for collecting API server concurrency metrics with histograms
+{{$action := .action}} # start, gather
+
+
+steps:
+- name: "{{$action}}ing API server concurrency measurements"
+  measurements:
+  - Identifier: APIServerInflights
+    Method: GenericPrometheusQuery
+    Params:
+      action: {{$action}}
+      metricName: "APIServerConcurrency"
+      metricVersion: v1
+      unit: req
+      queries:
+        # Inflight readonly (read) requests
+        - name: inflight_readonly_min
+          query: "min_over_time(apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inflight_readonly_p50
+          query: "quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inflight_readonly_p90
+          query: "quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inflight_readonly_p99
+          query: "quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inflight_readonly_avg
+          query: "avg_over_time(apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inflight_readonly_max
+          query: "max_over_time(apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        # Inflight mutating (write) requests
+        - name: inflight_mutating_min
+          query: "min_over_time(apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inflight_mutating_p50
+          query: "quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inflight_mutating_p90
+          query: "quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inflight_mutating_p99
+          query: "quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inflight_mutating_avg
+          query: "avg_over_time(apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inflight_mutating_max
+          query: "max_over_time(apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+  - Identifier: APIServerInqueues
+    Method: GenericPrometheusQuery
+    Params:
+      action: {{$action}}
+      metricName: "APIServerInqueue"
+      metricVersion: v1
+      unit: req
+      queries:
+        # Inqueue readonly (read) requests
+        - name: inqueue_readonly_min
+          query: "min_over_time(apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inqueue_readonly_p50
+          query: "quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inqueue_readonly_p90
+          query: "quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inqueue_readonly_p99
+          query: "quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inqueue_readonly_avg
+          query: "avg_over_time(apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        - name: inqueue_readonly_max
+          query: "max_over_time(apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+          requireSamples: false
+        # Inqueue mutating (write) requests
+        - name: inqueue_mutating_min
+          query: "min_over_time(apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inqueue_mutating_p50
+          query: "quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inqueue_mutating_p90
+          query: "quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inqueue_mutating_p99
+          query: "quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inqueue_mutating_avg
+          query: "avg_over_time(apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+        - name: inqueue_mutating_max
+          query: "max_over_time(apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+          requireSamples: false
+
