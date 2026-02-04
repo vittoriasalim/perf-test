@@ -17,6 +17,11 @@
 set -o errexit
 set -o nounset
 set -o pipefail
+CL2_PROMETHEUS_TOLERATE_MASTER="true"
+CL2_PROMETHEUS_MEMORY_LIMIT_FACTOR=100.0
+CL2_PROMETHEUS_MEMORY_SCALE_FACTOR=100.0
+CL2_PROMETHEUS_CPU_SCALE_FACTOR=30.0
+CL2_PROMETHEUS_NODE_SELECTOR="prometheus: \"true\""
 
 # Add firewall rule for Prometheus port (9090)
 if [[ -n "${KUBE_GKE_NETWORK:-}" ]]; then
