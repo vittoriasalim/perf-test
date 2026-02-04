@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <testsuite name="ClusterLoaderV2" tests="0" failures="0" errors="0" time="1046.106">
+      <testcase name="load overall (./testing/load/config.yaml)" classname="ClusterLoaderV2" time="1046.093631397"></testcase>
+      <testcase name="load: [step: 01] starting measurements [00] - EtcdMetrics Cluster Database Size" classname="ClusterLoaderV2" time="1.052405034"></testcase>
+      <testcase name="load: [step: 02] starting API server concurrency measurements [00] - APIServerInflights" classname="ClusterLoaderV2" time="0.325850402"></testcase>
+      <testcase name="load: [step: 02] starting API server concurrency measurements [01] - APIServerInqueues" classname="ClusterLoaderV2" time="0.325843539"></testcase>
+      <testcase name="load: [step: 02] starting API server concurrency measurements [02] - APIServerFlowControl" classname="ClusterLoaderV2" time="0.325853037"></testcase>
+      <testcase name="load: [step: 03] create objects configmaps and secrets" classname="ClusterLoaderV2" time="3.552930959"></testcase>
+      <testcase name="load: [step: 04] Starting measurement for &#39;create objects&#39; [00] - " classname="ClusterLoaderV2" time="19.235122532"></testcase>
+      <testcase name="load: [step: 05] create objects" classname="ClusterLoaderV2" time="7.128732192"></testcase>
+      <testcase name="load: [step: 06] Waiting for &#39;create objects&#39; to be completed [00] - " classname="ClusterLoaderV2" time="223.368375943"></testcase>
+      <testcase name="load: [step: 07] Creating scheduler throughput measurements [00] - HighThroughputPodStartupLatency" classname="ClusterLoaderV2" time="2.386713831"></testcase>
+      <testcase name="load: [step: 07] Creating scheduler throughput measurements [01] - WaitForSchedulerThroughputDeployments" classname="ClusterLoaderV2" time="2.286316544"></testcase>
+      <testcase name="load: [step: 07] Creating scheduler throughput measurements [02] - SchedulingThroughput" classname="ClusterLoaderV2" time="2.2866982350000002"></testcase>
+      <testcase name="load: [step: 08] create scheduler throughput pods" classname="ClusterLoaderV2" time="1.094813118"></testcase>
+      <testcase name="load: [step: 09] Waiting for scheduler throughput pods to be created [00] - WaitForSchedulerThroughputDeployments" classname="ClusterLoaderV2" time="70.467294701"></testcase>
+      <testcase name="load: [step: 10] Collecting scheduler throughput measurements [00] - HighThroughputPodStartupLatency" classname="ClusterLoaderV2" time="21.90604377"></testcase>
+      <testcase name="load: [step: 10] Collecting scheduler throughput measurements [01] - SchedulingThroughput" classname="ClusterLoaderV2" time="0.359529034"></testcase>
+      <testcase name="load: [step: 11] delete scheduler throughput pods" classname="ClusterLoaderV2" time="1.047431048"></testcase>
+      <testcase name="load: [step: 12] Waiting for scheduler throughput pods to be deleted [00] - WaitForSchedulerThroughputDeployments" classname="ClusterLoaderV2" time="35.339733514"></testcase>
+      <testcase name="load: [step: 13] Starting measurement for &#39;delete objects&#39; [00] - " classname="ClusterLoaderV2" time="0.374270342"></testcase>
+      <testcase name="load: [step: 14] delete objects" classname="ClusterLoaderV2" time="10.098330742"></testcase>
+      <testcase name="load: [step: 15] Waiting for &#39;delete objects&#39; to be completed [00] - " classname="ClusterLoaderV2" time="385.185446676"></testcase>
+      <testcase name="load: [step: 15] Waiting for &#39;delete objects&#39; to be completed [01] - WaitForPVCsToBeDeleted" classname="ClusterLoaderV2" time="8.696530542"></testcase>
+      <testcase name="load: [step: 16] gathering measurements [00] - EtcdMetrics Cluster Database Size" classname="ClusterLoaderV2" time="4.645316676"></testcase>
+      <testcase name="load: [step: 17] gathering API server concurrency measurements [00] - APIServerInflights" classname="ClusterLoaderV2" time="6.542023927"></testcase>
+      <testcase name="load: [step: 17] gathering API server concurrency measurements [01] - APIServerInqueues" classname="ClusterLoaderV2" time="6.542076214"></testcase>
+      <testcase name="load: [step: 17] gathering API server concurrency measurements [02] - APIServerFlowControl" classname="ClusterLoaderV2" time="6.542140744"></testcase>
+  </testsuite>

@@ -1,0 +1,22 @@
+{
+  "version": "v1",
+  "dataItems": [
+    {
+      "data": {
+        "inflight_1m_avg": 436.75,
+        "inflight_1m_max": 1468,
+        "inflight_1m_min": 70,
+        "inflight_1m_p50": 352,
+        "inflight_1m_p90": 989,
+        "inflight_1m_p99": 1433.05,
+        "inflight_5m_avg": 2032.3333333333333,
+        "inflight_5m_max": 4228,
+        "inflight_5m_min": 244,
+        "inflight_5m_p50": 1625,
+        "inflight_5m_p90": 3707.4,
+        "inflight_5m_p99": 4175.94
+      },
+      "unit": "req"
+    }
+  ]
+}

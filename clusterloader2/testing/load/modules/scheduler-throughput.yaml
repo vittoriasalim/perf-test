@@ -77,4 +77,8 @@ steps:
       action: gather
       enableViolations: true
       threshold: {{$SCHEDULER_THROUGHPUT_THRESHOLD}}
+  - Identifier: SchedulerScheduleAttempts
+    Method: GenericPrometheusQuery
+    Params:
+      action: gather
 {{end}}

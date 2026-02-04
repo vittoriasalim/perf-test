@@ -16,23 +16,43 @@ steps:
       metricVersion: v1
       unit: bytes
       queries:
-        - name: apiserver_storage_size_min
-          query: "min_over_time(apiserver_storage_size_bytes[5m])"
+        # 1-minute bucket over 1h window
+        - name: apiserver_storage_size_1m_min
+          query: "min_over_time(apiserver_storage_size_bytes[1h:1m])"
           requireSamples: false
-        - name: apiserver_storage_size_avg
-          query: "avg_over_time(apiserver_storage_size_bytes[5m])"
+        - name: apiserver_storage_size_1m_avg
+          query: "avg_over_time(apiserver_storage_size_bytes[1h:1m])"
           requireSamples: false
-        - name: apiserver_storage_size_p50
-          query: "quantile_over_time(0.50, apiserver_storage_size_bytes[5m])"
+        - name: apiserver_storage_size_1m_p50
+          query: "quantile_over_time(0.50, apiserver_storage_size_bytes[1h:1m])"
           requireSamples: false
-        - name: apiserver_storage_size_p90
-          query: "quantile_over_time(0.90, apiserver_storage_size_bytes[5m])"
+        - name: apiserver_storage_size_1m_p90
+          query: "quantile_over_time(0.90, apiserver_storage_size_bytes[1h:1m])"
           requireSamples: false
-        - name: apiserver_storage_size_p99
-          query: "quantile_over_time(0.99, apiserver_storage_size_bytes[5m])"
+        - name: apiserver_storage_size_1m_p99
+          query: "quantile_over_time(0.99, apiserver_storage_size_bytes[1h:1m])"
           requireSamples: false
-        - name: apiserver_storage_size_max
-          query: "max_over_time(apiserver_storage_size_bytes[5m])"
+        - name: apiserver_storage_size_1m_max
+          query: "max_over_time(apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        # 5-minute bucket over 1h window
+        - name: apiserver_storage_size_5m_min
+          query: "min_over_time(apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_avg
+          query: "avg_over_time(apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_p50
+          query: "quantile_over_time(0.50, apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_p90
+          query: "quantile_over_time(0.90, apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_p99
+          query: "quantile_over_time(0.99, apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_max
+          query: "max_over_time(apiserver_storage_size_bytes[1h:5m])"
           requireSamples: false
 - module:
     path: /prometheus/kube-apiserver.yaml

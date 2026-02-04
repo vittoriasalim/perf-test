@@ -3,7 +3,7 @@ dependencies: []
 automanagednamespaces: 0
 namespace:
   number: 53
-  prefix: test-6oq22c
+  prefix: test-n639qj
   deletestalenamespaces: false
   deleteautomanagednamespaces: true
   enableexistingnamespaces: false
@@ -17,41 +17,23 @@ steps:
       metricName: EtcdMetrics
       metricVersion: v1
       queries:
-      - name: apiserver_storage_size_1m_min
-        query: min_over_time(apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_min
+        query: min_over_time(apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_avg
-        query: avg_over_time(apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_avg
+        query: avg_over_time(apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_p50
-        query: quantile_over_time(0.50, apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_p50
+        query: quantile_over_time(0.50, apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_p90
-        query: quantile_over_time(0.90, apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_p90
+        query: quantile_over_time(0.90, apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_p99
-        query: quantile_over_time(0.99, apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_p99
+        query: quantile_over_time(0.99, apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_max
-        query: max_over_time(apiserver_storage_size_bytes[1h:1m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_min
-        query: min_over_time(apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_avg
-        query: avg_over_time(apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_p50
-        query: quantile_over_time(0.50, apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_p90
-        query: quantile_over_time(0.90, apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_p99
-        query: quantile_over_time(0.99, apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_max
-        query: max_over_time(apiserver_storage_size_bytes[1h:5m])
+      - name: apiserver_storage_size_max
+        query: max_over_time(apiserver_storage_size_bytes[5m])
         requireSamples: false
       unit: bytes
     identifier: EtcdMetrics Cluster Database Size
@@ -69,40 +51,40 @@ steps:
       metricVersion: v1
       queries:
       - name: inflight_1m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_5m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       unit: req
     identifier: APIServerInflights
@@ -114,40 +96,40 @@ steps:
       metricVersion: v1
       queries:
       - name: inqueue_1m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_5m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       unit: req
     identifier: APIServerInqueues
@@ -159,40 +141,40 @@ steps:
       metricVersion: v1
       queries:
       - name: flowcontrol_executing_seats_1m_min
-        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_max
-        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_min
-        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_max
-        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       unit: seats
     identifier: APIServerFlowControl
@@ -201,6 +183,60 @@ steps:
     path: ""
     params: {}
   name: starting API server concurrency measurements
+- phases:
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: big-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 10
+    tuningset: default
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: create objects configmaps and secrets
 - phases: []
   measurements:
   - method: WaitForControlledPodsRunning
@@ -764,41 +800,23 @@ steps:
       metricName: EtcdMetrics
       metricVersion: v1
       queries:
-      - name: apiserver_storage_size_1m_min
-        query: min_over_time(apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_min
+        query: min_over_time(apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_avg
-        query: avg_over_time(apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_avg
+        query: avg_over_time(apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_p50
-        query: quantile_over_time(0.50, apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_p50
+        query: quantile_over_time(0.50, apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_p90
-        query: quantile_over_time(0.90, apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_p90
+        query: quantile_over_time(0.90, apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_p99
-        query: quantile_over_time(0.99, apiserver_storage_size_bytes[1h:1m])
+      - name: apiserver_storage_size_p99
+        query: quantile_over_time(0.99, apiserver_storage_size_bytes[5m])
         requireSamples: false
-      - name: apiserver_storage_size_1m_max
-        query: max_over_time(apiserver_storage_size_bytes[1h:1m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_min
-        query: min_over_time(apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_avg
-        query: avg_over_time(apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_p50
-        query: quantile_over_time(0.50, apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_p90
-        query: quantile_over_time(0.90, apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_p99
-        query: quantile_over_time(0.99, apiserver_storage_size_bytes[1h:5m])
-        requireSamples: false
-      - name: apiserver_storage_size_5m_max
-        query: max_over_time(apiserver_storage_size_bytes[1h:5m])
+      - name: apiserver_storage_size_max
+        query: max_over_time(apiserver_storage_size_bytes[5m])
         requireSamples: false
       unit: bytes
     identifier: EtcdMetrics Cluster Database Size
@@ -816,40 +834,40 @@ steps:
       metricVersion: v1
       queries:
       - name: inflight_1m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_1m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[1h:1m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inflight_5m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inflight_5m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[1h:5m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])
         requireSamples: false
       unit: req
     identifier: APIServerInflights
@@ -861,40 +879,40 @@ steps:
       metricVersion: v1
       queries:
       - name: inqueue_1m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_1m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[1h:1m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       - name: inqueue_5m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_min
-        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       - name: inqueue_5m_max
-        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[1h:5m])
+        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])
         requireSamples: false
       unit: req
     identifier: APIServerInqueues
@@ -906,40 +924,40 @@ steps:
       metricVersion: v1
       queries:
       - name: flowcontrol_executing_seats_1m_min
-        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_1m_max
-        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[1h:1m])
+        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_min
-        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_p50
-        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_p90
-        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_p99
-        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_avg
-        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       - name: flowcontrol_executing_seats_5m_max
-        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[1h:5m])
+        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])
         requireSamples: false
       unit: seats
     identifier: APIServerFlowControl
@@ -963,7 +981,7 @@ tuningsets:
 - name: Uniform200qps
   initialdelay: 0
   qpsload:
-    qps: 400
+    qps: 200
   randomizedload: null
   steppedload: null
   timelimitedload: null
@@ -980,8 +998,8 @@ tuningsets:
   randomizedtimelimitedload: null
   parallelismlimitedload: null
   globalqpsload:
-    qps: 400
-    burst: 800
+    qps: 200
+    burst: 400
   poissonload: null
 - name: RandomizedSaturationTimeLimited
   initialdelay: 0

@@ -1,0 +1,22 @@
+{
+  "version": "v1",
+  "dataItems": [
+    {
+      "data": {
+        "inqueue_1m_avg": 200.31249999999991,
+        "inqueue_1m_max": 2566,
+        "inqueue_1m_min": 21,
+        "inqueue_1m_p50": 32.5,
+        "inqueue_1m_p90": 129.5,
+        "inqueue_1m_p99": 2214.249999999999,
+        "inqueue_5m_avg": 1038.3333333333333,
+        "inqueue_5m_max": 2895,
+        "inqueue_5m_min": 72,
+        "inqueue_5m_p50": 148,
+        "inqueue_5m_p90": 2345.6,
+        "inqueue_5m_p99": 2840.06
+      },
+      "unit": "req"
+    }
+  ]
+}
