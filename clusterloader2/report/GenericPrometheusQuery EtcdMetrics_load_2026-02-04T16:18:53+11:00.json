@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "dataItems": [
+    {
+      "data": {
+        "apiserver_storage_size_avg": 154351274.66666672,
+        "apiserver_storage_size_max": 154398720,
+        "apiserver_storage_size_min": 154284032,
+        "apiserver_storage_size_p50": 154345472,
+        "apiserver_storage_size_p90": 154398720,
+        "apiserver_storage_size_p99": 154398720
+      },
+      "unit": "bytes"
+    }
+  ]
+}

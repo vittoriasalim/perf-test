@@ -3,7 +3,7 @@ dependencies: []
 automanagednamespaces: 0
 namespace:
   number: 2
-  prefix: test-3ju9zs
+  prefix: test-0ovwvf
   deletestalenamespaces: false
   deleteautomanagednamespaces: true
   enableexistingnamespaces: false
@@ -50,41 +50,23 @@ steps:
       metricName: APIServerConcurrency
       metricVersion: v1
       queries:
-      - name: inflight_readonly_min
-        query: min_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_p50
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_p50
-        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_p90
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_p90
-        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_p99
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_p99
-        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_min
+        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_avg
-        query: avg_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_avg
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_max
-        query: max_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_min
-        query: min_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_p50
-        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_p90
-        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_p99
-        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_avg
-        query: avg_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_max
-        query: max_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+      - name: inflight_max
+        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       unit: req
     identifier: APIServerInflights
@@ -95,44 +77,53 @@ steps:
       metricName: APIServerInqueue
       metricVersion: v1
       queries:
-      - name: inqueue_readonly_min
-        query: min_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_p50
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_p50
-        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_p90
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_p90
-        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_p99
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_p99
-        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_min
+        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_avg
-        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_avg
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_max
-        query: max_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_min
-        query: min_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_p50
-        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_p90
-        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_p99
-        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_avg
-        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_max
-        query: max_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+      - name: inqueue_max
+        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       unit: req
     identifier: APIServerInqueues
+    instances: []
+  - method: GenericPrometheusQuery
+    params:
+      action: start
+      metricName: APIServerFlowControlSeats
+      metricVersion: v1
+      queries:
+      - name: flowcontrol_executing_seats_min
+        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_p50
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_p90
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_p99
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_avg
+        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_max
+        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      unit: seats
+    identifier: APIServerFlowControl
     instances: []
   module:
     path: ""
@@ -144,7 +135,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 66
+    replicaspernamespace: 0
     tuningset: Sequence
     objectbundle:
     - basename: big-service
@@ -156,7 +147,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 66
+    replicaspernamespace: 0
     tuningset: Sequence
     objectbundle:
     - basename: medium-service
@@ -168,7 +159,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 133
+    replicaspernamespace: 25
     tuningset: Sequence
     objectbundle:
     - basename: small-service
@@ -201,7 +192,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 132
+    replicaspernamespace: 0
     tuningset: default
     objectbundle:
     - basename: big-deployment
@@ -217,7 +208,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 132
+    replicaspernamespace: 0
     tuningset: default
     objectbundle:
     - basename: medium-deployment
@@ -233,7 +224,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 265
+    replicaspernamespace: 49
     tuningset: default
     objectbundle:
     - basename: small-deployment
@@ -256,7 +247,7 @@ steps:
       action: start
       checkIfPodsAreUpdated: true
       labelSelector: group = load
-      operationTimeout: 15m
+      operationTimeout: 1h
     identifier: ""
     instances:
     - identifier: WaitForRunningDeployments
@@ -299,7 +290,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 132
+    replicaspernamespace: 0
     tuningset: RandomizedSaturationTimeLimited
     objectbundle:
     - basename: big-deployment
@@ -307,8 +298,8 @@ steps:
       templatefillmap:
         EnableDNSTests: false
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
         SvcName: big-service
       listunknownobjectoptions: null
   - namespacerange:
@@ -316,7 +307,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 132
+    replicaspernamespace: 0
     tuningset: RandomizedSaturationTimeLimited
     objectbundle:
     - basename: medium-deployment
@@ -324,8 +315,8 @@ steps:
       templatefillmap:
         EnableDNSTests: false
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
         SvcName: medium-service
       listunknownobjectoptions: null
   - namespacerange:
@@ -333,7 +324,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 265
+    replicaspernamespace: 49
     tuningset: RandomizedSaturationTimeLimited
     objectbundle:
     - basename: small-deployment
@@ -343,8 +334,8 @@ steps:
         EnableNetworkPolicyEnforcementLatencyTest: false
         Image: registry.k8s.io/pause:3.9
         NetPolServerOnEveryNthPod: 3
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 80
+        ReplicasMin: 80
         SvcName: small-service
         TargetLabelKey: net-pol-test
         TargetLabelValue: enforcement-latency
@@ -365,8 +356,8 @@ steps:
       objecttemplatepath: statefulset.yaml
       templatefillmap:
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 80
+        ReplicasMin: 80
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -384,8 +375,8 @@ steps:
       objecttemplatepath: statefulset.yaml
       templatefillmap:
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -398,10 +389,10 @@ steps:
     - basename: small-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 240
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 80
+        ReplicasMin: 80
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -414,10 +405,10 @@ steps:
     - basename: medium-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 4800
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -430,10 +421,10 @@ steps:
     - basename: big-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 4800
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
       listunknownobjectoptions: null
   measurements: []
   module:
@@ -578,7 +569,7 @@ steps:
       action: start
       checkIfPodsAreUpdated: true
       labelSelector: group = load
-      operationTimeout: 15m
+      operationTimeout: 1h
     identifier: ""
     instances:
     - identifier: WaitForRunningDeployments
@@ -621,7 +612,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 132
+    replicaspernamespace: 0
     tuningset: RandomizedScalingTimeLimited
     objectbundle:
     - basename: big-deployment
@@ -629,8 +620,8 @@ steps:
       templatefillmap:
         EnableDNSTests: false
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 2400
+        ReplicasMin: 800
         SvcName: big-service
       listunknownobjectoptions: null
   - namespacerange:
@@ -638,7 +629,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 132
+    replicaspernamespace: 0
     tuningset: RandomizedScalingTimeLimited
     objectbundle:
     - basename: medium-deployment
@@ -646,8 +637,8 @@ steps:
       templatefillmap:
         EnableDNSTests: false
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 2400
+        ReplicasMin: 800
         SvcName: medium-service
       listunknownobjectoptions: null
   - namespacerange:
@@ -655,7 +646,7 @@ steps:
       max: 1
       basename: null
     namespacelist: []
-    replicaspernamespace: 265
+    replicaspernamespace: 49
     tuningset: RandomizedScalingTimeLimited
     objectbundle:
     - basename: small-deployment
@@ -665,8 +656,8 @@ steps:
         EnableNetworkPolicyEnforcementLatencyTest: false
         Image: registry.k8s.io/pause:3.9
         NetPolServerOnEveryNthPod: 3
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 120
+        ReplicasMin: 40
         SvcName: small-service
         TargetLabelKey: net-pol-test
         TargetLabelValue: enforcement-latency
@@ -687,8 +678,8 @@ steps:
       objecttemplatepath: statefulset.yaml
       templatefillmap:
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 120
+        ReplicasMin: 40
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -706,8 +697,8 @@ steps:
       objecttemplatepath: statefulset.yaml
       templatefillmap:
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 2400
+        ReplicasMin: 800
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -720,10 +711,10 @@ steps:
     - basename: small-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 240
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 120
+        ReplicasMin: 40
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -736,10 +727,10 @@ steps:
     - basename: medium-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 4800
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 2400
+        ReplicasMin: 800
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -752,10 +743,10 @@ steps:
     - basename: big-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 4800
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 4
-        ReplicasMin: 1
+        ReplicasMax: 2400
+        ReplicasMin: 800
       listunknownobjectoptions: null
   measurements: []
   module:
@@ -788,7 +779,7 @@ steps:
       action: start
       checkIfPodsAreUpdated: true
       labelSelector: group = load
-      operationTimeout: 15m
+      operationTimeout: 1h
     identifier: ""
     instances:
     - identifier: WaitForRunningDeployments
@@ -839,8 +830,8 @@ steps:
       templatefillmap:
         EnableDNSTests: false
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
         SvcName: big-service
       listunknownobjectoptions: null
   - namespacerange:
@@ -856,8 +847,8 @@ steps:
       templatefillmap:
         EnableDNSTests: false
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
         SvcName: medium-service
       listunknownobjectoptions: null
   - namespacerange:
@@ -875,8 +866,8 @@ steps:
         EnableNetworkPolicyEnforcementLatencyTest: false
         Image: registry.k8s.io/pause:3.9
         NetPolServerOnEveryNthPod: 3
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 80
+        ReplicasMin: 80
         SvcName: small-service
         TargetLabelKey: net-pol-test
         TargetLabelValue: enforcement-latency
@@ -897,8 +888,8 @@ steps:
       objecttemplatepath: statefulset.yaml
       templatefillmap:
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 80
+        ReplicasMin: 80
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -916,8 +907,8 @@ steps:
       objecttemplatepath: statefulset.yaml
       templatefillmap:
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -930,10 +921,10 @@ steps:
     - basename: small-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 240
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 80
+        ReplicasMin: 80
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -946,10 +937,10 @@ steps:
     - basename: medium-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 4800
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -962,10 +953,10 @@ steps:
     - basename: big-job
       objecttemplatepath: job.yaml
       templatefillmap:
-        Completions: 9
+        Completions: 4800
         Image: registry.k8s.io/pause:3.9
-        ReplicasMax: 3
-        ReplicasMin: 3
+        ReplicasMax: 1600
+        ReplicasMin: 1600
       listunknownobjectoptions: null
   - namespacerange:
       min: 1
@@ -1007,7 +998,7 @@ steps:
     params:
       desiredPVCCount: 0
       labelSelector: group = load
-      timeout: 15m
+      timeout: 1h
     identifier: WaitForPVCsToBeDeleted
     instances: []
   module:
@@ -1166,41 +1157,23 @@ steps:
       metricName: APIServerConcurrency
       metricVersion: v1
       queries:
-      - name: inflight_readonly_min
-        query: min_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_p50
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_p50
-        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_p90
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_p90
-        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_p99
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_p99
-        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_min
+        query: min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_avg
-        query: avg_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
+      - name: inflight_avg
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inflight_readonly_max
-        query: max_over_time(apiserver_current_inflight_requests{request_kind="readonly"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_min
-        query: min_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_p50
-        query: quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_p90
-        query: quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_p99
-        query: quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_avg
-        query: avg_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inflight_mutating_max
-        query: max_over_time(apiserver_current_inflight_requests{request_kind="mutating"}[5m])
+      - name: inflight_max
+        query: max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])
         requireSamples: false
       unit: req
     identifier: APIServerInflights
@@ -1211,44 +1184,53 @@ steps:
       metricName: APIServerInqueue
       metricVersion: v1
       queries:
-      - name: inqueue_readonly_min
-        query: min_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_p50
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_p50
-        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_p90
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_p90
-        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_p99
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_p99
-        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_min
+        query: min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_avg
-        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
+      - name: inqueue_avg
+        query: avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
-      - name: inqueue_readonly_max
-        query: max_over_time(apiserver_current_inqueue_requests{request_kind="readonly"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_min
-        query: min_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_p50
-        query: quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_p90
-        query: quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_p99
-        query: quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_avg
-        query: avg_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
-        requireSamples: false
-      - name: inqueue_mutating_max
-        query: max_over_time(apiserver_current_inqueue_requests{request_kind="mutating"}[5m])
+      - name: inqueue_max
+        query: max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])
         requireSamples: false
       unit: req
     identifier: APIServerInqueues
+    instances: []
+  - method: GenericPrometheusQuery
+    params:
+      action: gather
+      metricName: APIServerFlowControlSeats
+      metricVersion: v1
+      queries:
+      - name: flowcontrol_executing_seats_min
+        query: min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_p50
+        query: quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_p90
+        query: quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_p99
+        query: quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_avg
+        query: avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      - name: flowcontrol_executing_seats_max
+        query: max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])
+        requireSamples: false
+      unit: seats
+    identifier: APIServerFlowControl
     instances: []
   module:
     path: ""
@@ -1266,10 +1248,10 @@ tuningsets:
     parallelismlimit: 1
   globalqpsload: null
   poissonload: null
-- name: Uniform5qps
+- name: Uniform150qps
   initialdelay: 0
   qpsload:
-    qps: 5
+    qps: 150
   randomizedload: null
   steppedload: null
   timelimitedload: null
@@ -1287,7 +1269,7 @@ tuningsets:
   parallelismlimitedload: null
   globalqpsload:
     qps: 10
-    burst: 1
+    burst: 300
   poissonload: null
 - name: RandomizedSaturationTimeLimited
   initialdelay: 0
@@ -1296,7 +1278,7 @@ tuningsets:
   steppedload: null
   timelimitedload: null
   randomizedtimelimitedload:
-    timelimit: 160000000000
+    timelimit: 800000000000
   parallelismlimitedload: null
   globalqpsload: null
   poissonload: null
@@ -1307,7 +1289,7 @@ tuningsets:
   steppedload: null
   timelimitedload: null
   randomizedtimelimitedload:
-    timelimit: 40000000000
+    timelimit: 200000000000
   parallelismlimitedload: null
   globalqpsload: null
   poissonload: null
@@ -1318,7 +1300,7 @@ tuningsets:
   steppedload: null
   timelimitedload: null
   randomizedtimelimitedload:
-    timelimit: 160000000000
+    timelimit: 800000000000
   parallelismlimitedload: null
   globalqpsload: null
   poissonload: null

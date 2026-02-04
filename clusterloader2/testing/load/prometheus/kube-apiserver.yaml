@@ -13,43 +13,41 @@ steps:
       metricVersion: v1
       unit: req
       queries:
-        # Inflight readonly (read) requests
-        - name: inflight_readonly_min
-          query: "min_over_time(apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+        - name: inflight_1m_p50
+          query: "quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inflight_readonly_p50
-          query: "quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+        - name: inflight_1m_p90
+          query: "quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inflight_readonly_p90
-          query: "quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+        - name: inflight_1m_p99
+          query: "quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inflight_readonly_p99
-          query: "quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+        - name: inflight_1m_min
+          query: "min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inflight_readonly_avg
-          query: "avg_over_time(apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+        - name: inflight_1m_avg
+          query: "avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inflight_readonly_max
-          query: "max_over_time(apiserver_current_inflight_requests{request_kind=\"readonly\"}[5m])"
+        - name: inflight_1m_max
+          query: "max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[1m]))[2h:1m])"
           requireSamples: false
-        # Inflight mutating (write) requests
-        - name: inflight_mutating_min
-          query: "min_over_time(apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+        - name: inflight_5m_p50
+          query: "quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inflight_mutating_p50
-          query: "quantile_over_time(0.50, apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+        - name: inflight_5m_p90
+          query: "quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inflight_mutating_p90
-          query: "quantile_over_time(0.90, apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+        - name: inflight_5m_p99
+          query: "quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inflight_mutating_p99
-          query: "quantile_over_time(0.99, apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+        - name: inflight_5m_min
+          query: "min_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inflight_mutating_avg
-          query: "avg_over_time(apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+        - name: inflight_5m_avg
+          query: "avg_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inflight_mutating_max
-          query: "max_over_time(apiserver_current_inflight_requests{request_kind=\"mutating\"}[5m])"
+        - name: inflight_5m_max
+          query: "max_over_time(sum(sum_over_time(apiserver_current_inflight_requests[5m]))[2h:5m])"
           requireSamples: false
   - Identifier: APIServerInqueues
     Method: GenericPrometheusQuery
@@ -59,42 +57,85 @@ steps:
       metricVersion: v1
       unit: req
       queries:
-        # Inqueue readonly (read) requests
-        - name: inqueue_readonly_min
-          query: "min_over_time(apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+        - name: inqueue_1m_p50
+          query: "quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inqueue_readonly_p50
-          query: "quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+        - name: inqueue_1m_p90
+          query: "quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inqueue_readonly_p90
-          query: "quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+        - name: inqueue_1m_p99
+          query: "quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inqueue_readonly_p99
-          query: "quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+        - name: inqueue_1m_min
+          query: "min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inqueue_readonly_avg
-          query: "avg_over_time(apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+        - name: inqueue_1m_avg
+          query: "avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])"
           requireSamples: false
-        - name: inqueue_readonly_max
-          query: "max_over_time(apiserver_current_inqueue_requests{request_kind=\"readonly\"}[5m])"
+        - name: inqueue_1m_max
+          query: "max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[1m]))[2h:1m])"
           requireSamples: false
-        # Inqueue mutating (write) requests
-        - name: inqueue_mutating_min
-          query: "min_over_time(apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+        - name: inqueue_5m_p50
+          query: "quantile_over_time(0.50, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inqueue_mutating_p50
-          query: "quantile_over_time(0.50, apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+        - name: inqueue_5m_p90
+          query: "quantile_over_time(0.90, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inqueue_mutating_p90
-          query: "quantile_over_time(0.90, apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+        - name: inqueue_5m_p99
+          query: "quantile_over_time(0.99, sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inqueue_mutating_p99
-          query: "quantile_over_time(0.99, apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+        - name: inqueue_5m_min
+          query: "min_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inqueue_mutating_avg
-          query: "avg_over_time(apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+        - name: inqueue_5m_avg
+          query: "avg_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])"
           requireSamples: false
-        - name: inqueue_mutating_max
-          query: "max_over_time(apiserver_current_inqueue_requests{request_kind=\"mutating\"}[5m])"
+        - name: inqueue_5m_max
+          query: "max_over_time(sum(sum_over_time(apiserver_current_inqueue_requests[5m]))[2h:5m])"
+          requireSamples: false
+  - Identifier: APIServerFlowControl
+    Method: GenericPrometheusQuery
+    Params:
+      action: {{$action}}
+      metricName: "APIServerFlowControlSeats"
+      metricVersion: v1
+      unit: seats
+      queries:
+        # Flow control executing seats - aggregate across all flow schemas
+        - name: flowcontrol_executing_seats_1m_min
+          query: "min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_1m_p50
+          query: "quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_1m_p90
+          query: "quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_1m_p99
+          query: "quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_1m_avg
+          query: "avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_1m_max
+          query: "max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[1m]))[2h:1m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_5m_min
+          query: "min_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_5m_p50
+          query: "quantile_over_time(0.50, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_5m_p90
+          query: "quantile_over_time(0.90, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_5m_p99
+          query: "quantile_over_time(0.99, sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_5m_avg
+          query: "avg_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])"
+          requireSamples: false
+        - name: flowcontrol_executing_seats_5m_max
+          query: "max_over_time(sum(sum_over_time(apiserver_flowcontrol_current_executing_seats[5m]))[2h:5m])"
           requireSamples: false
 

@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "dataItems": [
+    {
+      "data": {
+        "inqueue_avg": 102.61538461538461,
+        "inqueue_max": 191,
+        "inqueue_min": 14,
+        "inqueue_p50": 101,
+        "inqueue_p90": 111.2,
+        "inqueue_p99": 181.51999999999992
+      },
+      "unit": "req"
+    }
+  ]
+}

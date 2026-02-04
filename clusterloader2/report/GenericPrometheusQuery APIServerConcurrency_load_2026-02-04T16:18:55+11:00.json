@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "dataItems": [
+    {
+      "data": {
+        "inflight_avg": 268.9230769230769,
+        "inflight_max": 476,
+        "inflight_min": 22,
+        "inflight_p50": 269,
+        "inflight_p90": 361.6,
+        "inflight_p99": 463.5199999999999
+      },
+      "unit": "req"
+    }
+  ]
+}

@@ -14,7 +14,7 @@
 {{$DELETE_TEST_THROUGHPUT := DefaultParam .CL2_DELETE_TEST_THROUGHPUT $LOAD_TEST_THROUGHPUT}}
 {{$RATE_LIMIT_POD_CREATION := DefaultParam .CL2_RATE_LIMIT_POD_CREATION true}}
 {{$BIG_GROUP_SIZE := DefaultParam .BIG_GROUP_SIZE 250}}
-{{$MEDIUM_GROUP_SIZE := DefaultParam .MEDIUM_GROUP_SIZE 30}}
+{{$MEDIUM_GROUP_SIZE := DefaultParam .MEDIUM_GROUP_SIZE 1600}}
 {{$SMALL_GROUP_SIZE := DefaultParam .SMALL_GROUP_SIZE 5}}
 {{$SMALL_STATEFUL_SETS_PER_NAMESPACE := DefaultParam .SMALL_STATEFUL_SETS_PER_NAMESPACE 1}}
 {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE := DefaultParam .MEDIUM_STATEFUL_SETS_PER_NAMESPACE 1}}
@@ -82,14 +82,14 @@ tuningSets:
     parallelismLimit: 1
 # TODO(https://github.com/kubernetes/perf-tests/issues/1024): This TuningSet is used only for pod-startup-latency, get rid of it
 # Uniform5qps: for each running phase, use 5 qps.
-- name: Uniform5qps
+- name: Uniform150qps
   qpsLoad:
-    qps: 5
+    qps: 150
 # default is a tuningset that is meant to be used when we don't have any specific requirements on pace of operations.
 - name: default
   globalQPSLoad:
     qps: {{$defaultQps}}
-    burst: 1
+    burst: 300
 - name: RandomizedSaturationTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$saturationTime}}s
@@ -145,7 +145,7 @@ steps:
       namespaces: {{$namespaces}}
       {{if $RATE_LIMIT_POD_CREATION}}
       tuningSet: RandomizedSaturationTimeLimited
-      operationTimeout: 15m
+      operationTimeout: 1h
       {{else}}
       tuningSet: default
       operationTimeout: {{AddInt $saturationTime 900}}s
@@ -179,8 +179,6 @@ steps:
       smallJobSize: {{$SMALL_GROUP_SIZE}}
       smallJobsPerNamespace: 1
 
-
-
 # BEGIN scheduler throughput
 - module:
     path: modules/scheduler-throughput.yaml
@@ -211,7 +209,7 @@ steps:
       namespaces: {{$namespaces}}
       {{if $RATE_LIMIT_POD_CREATION}}
       tuningSet: RandomizedScalingTimeLimited
-      operationTimeout: 15m
+      operationTimeout: 1h
       {{else}}
       tuningSet: default
       operationTimeout: {{AddInt (DivideInt $saturationTime 4) 900}}s
@@ -248,7 +246,7 @@ steps:
       namespaces: {{$namespaces}}
       {{if $RATE_LIMIT_POD_CREATION}}
       tuningSet: RandomizedDeletionTimeLimited
-      operationTimeout: 15m
+      operationTimeout: 1h
       {{else}}
       tuningSet: default
       operationTimeout: {{AddInt $deletionTime 900}}s

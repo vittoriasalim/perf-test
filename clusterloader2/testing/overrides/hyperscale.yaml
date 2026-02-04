@@ -1,26 +1,37 @@
 CL2_ENABLE_CONTAINER_RESOURCES_MEASUREMENT: true
 CL2_PROMETHEUS_TOLERATE_MASTER: true
-CL2_PROMETHEUS_MEMORY_LIMIT_FACTOR: 30.0
-CL2_PROMETHEUS_MEMORY_SCALE_FACTOR: 30.0
-CL2_PROMETHEUS_CPU_SCALE_FACTOR: 30.0
+CL2_PROMETHEUS_MEMORY_LIMIT_FACTOR: 50.0
+CL2_PROMETHEUS_MEMORY_SCALE_FACTOR: 50.0
+CL2_PROMETHEUS_CPU_SCALE_FACTOR: 50.0
 CL2_PROMETHEUS_NODE_SELECTOR: "prometheus: \"true\""
 PROMETHEUS_PVC_STORAGE_CLASS: managed
 
 # # 5000 nodes, 80k pods, 500 deployments (80 pods each), 500 jobs (80 pods each)
-# NODES: 100 # 5000
+# NODES: 5000 ÷ NODES_PER_NAMESPACE (100 default) = 50 namespaces
+# 5000 nodes × 16 pods/node = 80,000 total pods
+# 80,000 total pods ÷ 50 namespaces = 1,600 pods per namespace
+# BigDeploymentsPerNamespace = 1,600 / (4 × 1600) = 0.25 → 0 deployments ✓
+# MediumDeploymentsPerNamespace = 1,600 / (4 × 1600) = 0.25 → 0 deployments ✓
+# SmallDeploymentsPerNamespace = 1,600 / (2 × 80) = 10 deployments per namespace
+# 10 small deployments/namespace × 50 namespaces = 500 deployments
+# 500 deployments × 80 pods each = 40,000 pods
+
+# NODES: 5000
 # PODS_PER_NODE: 16
-# BIG_GROUP_SIZE: 10 # 80 pods per deployment/job
+# BIG_GROUP_SIZE: 1600 # 0 
+# MEDIUM_GROUP_SIZE: 1600 # 0 
+# SMALL_GROUP_SIZE: 80 # 80 pods per deployment per jobs
 # SMALL_STATEFUL_SETS_PER_NAMESPACE: 0 # disable st
 # MEDIUM_STATEFUL_SETS_PER_NAMESPACE: 0 
-# LOAD_TEST_THROUGHPUT: 100
+# LOAD_TEST_THROUGHPUT: 400
 
 
-# 5000 nodes, 80k pods, 500 deployments (80 pods each), 500 jobs (80 pods each)
-NODES: 10 # 5000
-PODS_PER_NODE: 16
-BIG_GROUP_SIZE: 3
-SMALL_GROUP_SIZE: 3 
-MEDIUM_GROUP_SIZE: 3
-SMALL_STATEFUL_SETS_PER_NAMESPACE: 0
+# TESTING
+NODES: 20
+PODS_PER_NODE: 80
+BIG_GROUP_SIZE: 1600 # 0 
+MEDIUM_GROUP_SIZE: 1600 # 0 
+SMALL_GROUP_SIZE: 80 # 80 pods per deployment per jobs
+SMALL_STATEFUL_SETS_PER_NAMESPACE: 0 # disable st
 MEDIUM_STATEFUL_SETS_PER_NAMESPACE: 0 
-LOAD_TEST_THROUGHPUT: 50
+LOAD_TEST_THROUGHPUT: 400

@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "dataItems": [
+    {
+      "data": {
+        "flowcontrol_executing_seats_avg": 94.84615384615385,
+        "flowcontrol_executing_seats_max": 198,
+        "flowcontrol_executing_seats_min": 11,
+        "flowcontrol_executing_seats_p50": 92,
+        "flowcontrol_executing_seats_p90": 125.60000000000002,
+        "flowcontrol_executing_seats_p99": 189.95999999999995
+      },
+      "unit": "seats"
+    }
+  ]
+}
