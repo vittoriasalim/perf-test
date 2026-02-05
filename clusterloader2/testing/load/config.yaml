@@ -101,15 +101,6 @@ steps:
       action: start
 
 - module:
-    path: modules/services/config.yaml
-    params:
-      actionName: "Creating"
-      namespaces: {{$namespaces}}
-      smallServicesPerNamespace: {{DivideInt (AddInt $smallDeploymentsPerNamespace 1) 2}}
-      mediumServicesPerNamespace: {{DivideInt (AddInt $mediumDeploymentsPerNamespace 1) 2}}
-      bigServicesPerNamespace: {{DivideInt (AddInt $bigDeploymentsPerNamespace 1) 2}}
-
-- module:
     path: modules/services.yaml
     params:
       actionName: "Creating"
@@ -237,7 +228,7 @@ steps:
       pvSmallStatefulSetSize: {{$SMALL_STATEFUL_SETS_PER_NAMESPACE}}
       pvMediumStatefulSetSize: {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE}}
 
-- module:
+-- module:
     path: /modules/configmaps-secrets.yaml
     params:
       actionName: delete
@@ -254,6 +245,15 @@ steps:
       objectBundle:
         - basename: daemonset-priorityclass
           objectTemplatePath: daemonset-priorityclass.yaml
+
+- module:
+    path: /modules/services.yaml
+    params:
+      actionName: "Deleting"
+      namespaces: {{$namespaces}}
+      smallServicesPerNamespace: 0
+      mediumServicesPerNamespace: 0
+      bigServicesPerNamespace: 0
 
 - module:
     path: /modules/measurements.yaml
