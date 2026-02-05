@@ -1,6 +1,6 @@
 {{$HostNetworkMode := DefaultParam .CL2_USE_HOST_NETWORK_PODS false}}
 {{$RUN_ON_ARM_NODES := DefaultParam .CL2_RUN_ON_ARM_NODES false}}
-{{$Image := DefaultParam .Image "registry.k8s.io/busybox"}}
+{{$Image := DefaultParam .Image "registry.k8s.io/pause:3.9"}}
 {{$podPayloadSize := DefaultParam .CL2_JOB_POD_PAYLOAD_SIZE 0}}
 
 apiVersion: batch/v1
@@ -26,9 +26,7 @@ spec:
       hostNetwork: {{$HostNetworkMode}}
       containers:
       - name: {{.Name}}
-        # Using busybox with sleep so pods run for a while then complete
         image: {{$Image}}
-        command: ["sh", "-c", "sleep 100 && exit 0"]
         env:
         - name: ENV_VAR
           value: {{RandDataWithSeed $podPayloadSize .Name}}
