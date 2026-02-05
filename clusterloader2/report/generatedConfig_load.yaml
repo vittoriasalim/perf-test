@@ -3,7 +3,7 @@ dependencies: []
 automanagednamespaces: 0
 namespace:
   number: 53
-  prefix: test-6oq22c
+  prefix: test-t4camd
   deletestalenamespaces: false
   deleteautomanagednamespaces: true
   enableexistingnamespaces: false
@@ -232,20 +232,6 @@ steps:
     params: {}
   name: Starting measurement for 'create objects'
 - phases:
-  - namespacerange:
-      min: 1
-      max: 1
-      basename: null
-    namespacelist: []
-    replicaspernamespace: 1
-    tuningset: default
-    objectbundle:
-    - basename: daemonset
-      objecttemplatepath: daemonset.yaml
-      templatefillmap:
-        Env: before update
-        Image: registry.k8s.io/pause:3.9
-      listunknownobjectoptions: null
   - namespacerange:
       min: 1
       max: 52
@@ -487,6 +473,11 @@ steps:
       threshold: 100
     identifier: SchedulingThroughput
     instances: []
+  - method: GenericPrometheusQuery
+    params:
+      action: gather
+    identifier: SchedulerScheduleAttempts
+    instances: []
   module:
     path: ""
     params: {}
@@ -554,20 +545,6 @@ steps:
     params: {}
   name: Starting measurement for 'delete objects'
 - phases:
-  - namespacerange:
-      min: 1
-      max: 1
-      basename: null
-    namespacelist: []
-    replicaspernamespace: 0
-    tuningset: default
-    objectbundle:
-    - basename: daemonset
-      objecttemplatepath: daemonset.yaml
-      templatefillmap:
-        Env: <no value>
-        Image: registry.k8s.io/pause:3.9
-      listunknownobjectoptions: null
   - namespacerange:
       min: 1
       max: 52
@@ -963,7 +940,7 @@ tuningsets:
 - name: Uniform200qps
   initialdelay: 0
   qpsload:
-    qps: 400
+    qps: 2000
   randomizedload: null
   steppedload: null
   timelimitedload: null
@@ -980,8 +957,8 @@ tuningsets:
   randomizedtimelimitedload: null
   parallelismlimitedload: null
   globalqpsload:
-    qps: 400
-    burst: 800
+    qps: 2000
+    burst: 4000
   poissonload: null
 - name: RandomizedSaturationTimeLimited
   initialdelay: 0

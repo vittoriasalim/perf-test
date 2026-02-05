@@ -70,17 +70,17 @@ namespace:
 tuningSets:
 - name: Sequence
   parallelismLimitedLoad:
-    parallelismLimit: 1
+    parallelismLimit: 500
 # TODO(https://github.com/kubernetes/perf-tests/issues/1024): This TuningSet is used only for pod-startup-latency, get rid of it
 # Uniform5qps: for each running phase, use 5 qps.
 - name: Uniform200qps
   qpsLoad:
-    qps: 400
+    qps: 2000
 # default is a tuningset that is meant to be used when we don't have any specific requirements on pace of operations.
 - name: default
   globalQPSLoad:
-    qps: 400
-    burst: 800
+    qps: 2000
+    burst: 400
 - name: RandomizedSaturationTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$saturationTime}}s
@@ -99,6 +99,45 @@ steps:
     path: /modules/measurements.yaml
     params:
       action: start
+
+- module:
+    path: modules/services/config.yaml
+    params:
+      actionName: "Creating"
+      namespaces: {{$namespaces}}
+      smallServicesPerNamespace: {{DivideInt (AddInt $smallDeploymentsPerNamespace 1) 2}}
+      mediumServicesPerNamespace: {{DivideInt (AddInt $mediumDeploymentsPerNamespace 1) 2}}
+      bigServicesPerNamespace: {{DivideInt (AddInt $bigDeploymentsPerNamespace 1) 2}}
+
+- module:
+    path: modules/services.yaml
+    params:
+      actionName: "Creating"
+      namespaces: {{$namespaces}}
+      smallServicesPerNamespace: {{DivideInt (AddInt $smallDeploymentsPerNamespace 1) 2}}
+      mediumServicesPerNamespace: {{DivideInt (AddInt $mediumDeploymentsPerNamespace 1) 2}}
+      bigServicesPerNamespace: {{DivideInt (AddInt $bigDeploymentsPerNamespace 1) 2}}
+
+- name: Creating PriorityClass for DaemonSets
+  phases:
+  - replicasPerNamespace: 1
+    tuningSet: Sequence
+    objectBundle:
+      - basename: daemonset-priorityclass
+        objectTemplatePath: daemonset-priorityclass.yaml
+
+# Moved from reconcile-objects/config.yaml to mitigate https://github.com/kubernetes/kubernetes/issues/96635.
+# TODO(https://github.com/kubernetes/perf-tests/issues/1823): Merge back to reconcile-objects/config.yaml once the k/k bug is fixed.
+- module:
+    path: /modules/configmaps-secrets.yaml
+    params:
+      actionName: create
+      tuningSet: default
+      namespaces: {{$namespaces}}
+      bigDeploymentsPerNamespace: {{$bigDeploymentsPerNamespace}}
+      mediumDeploymentsPerNamespace: {{$mediumDeploymentsPerNamespace}}
+      smallDeploymentsPerNamespace: {{$smallDeploymentsPerNamespace}}
+
 
 - module:
     path: /modules/reconcile-objects.yaml
@@ -197,6 +236,24 @@ steps:
       smallJobsPerNamespace: 0
       pvSmallStatefulSetSize: {{$SMALL_STATEFUL_SETS_PER_NAMESPACE}}
       pvMediumStatefulSetSize: {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE}}
+
+- module:
+    path: /modules/configmaps-secrets.yaml
+    params:
+      actionName: delete
+      tuningSet: default
+      namespaces: {{$namespaces}}
+      bigDeploymentsPerNamespace: 0
+      mediumDeploymentsPerNamespace: 0
+      smallDeploymentsPerNamespace: 0
+
+- name: Deleting PriorityClass for DaemonSets
+  phases:
+    - replicasPerNamespace: 0
+      tuningSet: Sequence
+      objectBundle:
+        - basename: daemonset-priorityclass
+          objectTemplatePath: daemonset-priorityclass.yaml
 
 - module:
     path: /modules/measurements.yaml
