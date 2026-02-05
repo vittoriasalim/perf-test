@@ -61,6 +61,7 @@
 
 {{$registry := DefaultParam .CL2_LATENCY_POD_REGISTRY "registry.k8s.io"}}
 {{$latencyPodImage := DefaultParam .CL2_LATENCY_POD_IMAGE (Concat $registry "/pause:3.9")}}
+{{$jobImage := DefaultParam .CL2_JOB_IMAGE (Concat $registry "/busybox:1.36")}}
 {{$defaultQps := DefaultParam .CL2_DEFAULT_QPS (IfThenElse (le .Nodes 500) 10 100)}}
 
 
@@ -150,7 +151,7 @@ steps:
       # whuch matches our SLO definition: https://github.com/kubernetes/community/blob/master/sig-scalability/slos/pod_startup_latency.md.
       daemonSetImage: {{$latencyPodImage}}
       deploymentImage: {{$latencyPodImage}}
-      jobImage: {{$latencyPodImage}}
+      jobImage: {{$jobImage}}
       statefulSetImage: {{$latencyPodImage}}
       daemonSetEnv: "before update"
       daemonSetReplicas: 1
@@ -206,7 +207,7 @@ steps:
       testMaxReplicaFactor: {{$RANDOM_SCALE_FACTOR}}
       daemonSetImage: {{$latencyPodImage}}
       deploymentImage: {{$latencyPodImage}}
-      jobImage: {{$latencyPodImage}}
+      jobImage: {{$jobImage}}
       statefulSetImage: {{$latencyPodImage}}
       daemonSetReplicas: 0
       bigDeploymentSize: {{$BIG_GROUP_SIZE}}
@@ -228,7 +229,7 @@ steps:
       pvSmallStatefulSetSize: {{$SMALL_STATEFUL_SETS_PER_NAMESPACE}}
       pvMediumStatefulSetSize: {{$MEDIUM_STATEFUL_SETS_PER_NAMESPACE}}
 
--- module:
+- module:
     path: /modules/configmaps-secrets.yaml
     params:
       actionName: delete

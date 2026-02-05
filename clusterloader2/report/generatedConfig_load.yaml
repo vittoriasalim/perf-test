@@ -3,7 +3,7 @@ dependencies: []
 automanagednamespaces: 0
 namespace:
   number: 53
-  prefix: test-t4camd
+  prefix: test-io91nq
   deletestalenamespaces: false
   deleteautomanagednamespaces: true
   enableexistingnamespaces: false
@@ -201,6 +201,117 @@ steps:
     path: ""
     params: {}
   name: starting API server concurrency measurements
+- phases:
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: big-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: medium-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 5
+    tuningset: Sequence
+    objectbundle:
+    - basename: small-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Creating k8s services
+- phases:
+  - namespacerange: null
+    namespacelist: []
+    replicaspernamespace: 1
+    tuningset: Sequence
+    objectbundle:
+    - basename: daemonset-priorityclass
+      objecttemplatepath: daemonset-priorityclass.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Creating PriorityClass for DaemonSets
+- phases:
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: big-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 10
+    tuningset: default
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: create objects configmaps and secrets
 - phases: []
   measurements:
   - method: WaitForControlledPodsRunning
@@ -733,6 +844,117 @@ steps:
     path: ""
     params: {}
   name: Waiting for 'delete objects' to be completed
+- phases:
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: big-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: big-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: medium-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: medium-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: default
+    objectbundle:
+    - basename: small-deployment
+      objecttemplatepath: configmap.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+    - basename: small-deployment
+      objecttemplatepath: secret.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: delete objects configmaps and secrets
+- phases:
+  - namespacerange: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: daemonset-priorityclass
+      objecttemplatepath: daemonset-priorityclass.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Deleting PriorityClass for DaemonSets
+- phases:
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: big-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: medium-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  - namespacerange:
+      min: 1
+      max: 52
+      basename: null
+    namespacelist: []
+    replicaspernamespace: 0
+    tuningset: Sequence
+    objectbundle:
+    - basename: small-service
+      objecttemplatepath: service.yaml
+      templatefillmap: {}
+      listunknownobjectoptions: null
+  measurements: []
+  module:
+    path: ""
+    params: {}
+  name: Deleting k8s services
 - phases: []
   measurements:
   - method: GenericPrometheusQuery
@@ -934,7 +1156,7 @@ tuningsets:
   timelimitedload: null
   randomizedtimelimitedload: null
   parallelismlimitedload:
-    parallelismlimit: 1
+    parallelismlimit: 100
   globalqpsload: null
   poissonload: null
 - name: Uniform200qps
@@ -958,7 +1180,7 @@ tuningsets:
   parallelismlimitedload: null
   globalqpsload:
     qps: 2000
-    burst: 4000
+    burst: 400
   poissonload: null
 - name: RandomizedSaturationTimeLimited
   initialdelay: 0

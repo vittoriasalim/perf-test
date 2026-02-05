@@ -1,6 +1,6 @@
 {{$HostNetworkMode := DefaultParam .CL2_USE_HOST_NETWORK_PODS false}}
 {{$RUN_ON_ARM_NODES := DefaultParam .CL2_RUN_ON_ARM_NODES false}}
-{{$Image := DefaultParam .Image "registry.k8s.io/pause:3.9"}}
+{{$Image := DefaultParam .Image "registry.k8s.io/busybox:1.36"}}
 {{$podPayloadSize := DefaultParam .CL2_JOB_POD_PAYLOAD_SIZE 0}}
 
 apiVersion: batch/v1
@@ -26,8 +26,9 @@ spec:
       hostNetwork: {{$HostNetworkMode}}
       containers:
       - name: {{.Name}}
-        # TODO(#799): We should test the "run-to-completion" workflow and hence don't use pause pods.
+        # Using busybox with exit 0 so jobs can complete
         image: {{$Image}}
+        command: ["sh", "-c", "exit 0"]
         env:
         - name: ENV_VAR
           value: {{RandDataWithSeed $podPayloadSize .Name}}
