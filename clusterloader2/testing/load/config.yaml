@@ -61,7 +61,7 @@
 
 {{$registry := DefaultParam .CL2_LATENCY_POD_REGISTRY "registry.k8s.io"}}
 {{$latencyPodImage := DefaultParam .CL2_LATENCY_POD_IMAGE (Concat $registry "/pause:3.9")}}
-{{$jobImage := DefaultParam .CL2_JOB_IMAGE (Concat $registry "/busybox:1.36")}}
+{{$jobImage := DefaultParam .CL2_JOB_IMAGE "busybox:1.36"}}
 {{$defaultQps := DefaultParam .CL2_DEFAULT_QPS (IfThenElse (le .Nodes 500) 10 100)}}
 
 
@@ -71,7 +71,7 @@ namespace:
 tuningSets:
 - name: Sequence
   parallelismLimitedLoad:
-    parallelismLimit: 100
+    parallelismLimit: 50
 # TODO(https://github.com/kubernetes/perf-tests/issues/1024): This TuningSet is used only for pod-startup-latency, get rid of it
 # Uniform5qps: for each running phase, use 5 qps.
 - name: Uniform200qps
@@ -81,7 +81,7 @@ tuningSets:
 - name: default
   globalQPSLoad:
     qps: 2000
-    burst: 400
+    burst: 4000
 - name: RandomizedSaturationTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$saturationTime}}s
