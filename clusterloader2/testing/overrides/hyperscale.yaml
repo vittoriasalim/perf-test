@@ -16,26 +16,7 @@ PROMETHEUS_PVC_STORAGE_CLASS: managed
 # 10 small deployments/namespace × 50 namespaces = 500 deployments
 # 500 deployments × 80 pods each = 40,000 pods
 
-# NODES: 5000
-# PODS_PER_NODE: 16
-# BIG_GROUP_SIZE: 0 # 0 
-# MEDIUM_GROUP_SIZE: 0 # 0 
-# SMALL_GROUP_SIZE: 80 # 80 pods per deployment per jobs
-# SMALL_STATEFUL_SETS_PER_NAMESPACE: 0 # disable st
-# MEDIUM_STATEFUL_SETS_PER_NAMESPACE: 0 
-# SMALL_DEPLOYMENTS_PER_NAMESPACE: 10 # 10 small deployments per namespace → 500 total
-# BIG_DEPLOYMENTS_PER_NAMESPACE: 0 # disable big deployments
-# MEDIUM_DEPLOYMENTS_PER_NAMESPACE: 0 # disable medium deployments
-# SMALL_JOBS_PER_NAMESPACE: 10 # 10 small jobs per namespace → 500 total
-# BIG_JOBS_PER_NAMESPACE: 0 # disable big jobs
-# MEDIUM_JOBS_PER_NAMESPACE: 0 # disable medium jobs
-# CL2_RATE_LIMIT_POD_CREATION: false
-# LOAD_TEST_THROUGHPUT: 400
-# RANDOM_SCALE_FACTOR: 0
-# DELETE_TEST_THROUGHPUT: 400
-
-# TESTING
-NODES: 5
+NODES: 5000
 PODS_PER_NODE: 16
 BIG_GROUP_SIZE: 0 # 0 
 MEDIUM_GROUP_SIZE: 0 # 0 
@@ -52,3 +33,22 @@ CL2_RATE_LIMIT_POD_CREATION: false
 LOAD_TEST_THROUGHPUT: 400
 RANDOM_SCALE_FACTOR: 0
 DELETE_TEST_THROUGHPUT: 400
+
+# TESTING
+# NODES: 5
+# PODS_PER_NODE: 16
+# BIG_GROUP_SIZE: 0 # 0 
+# MEDIUM_GROUP_SIZE: 0 # 0 
+# SMALL_GROUP_SIZE: 80 # 80 pods per deployment per jobs
+# SMALL_STATEFUL_SETS_PER_NAMESPACE: 0 # disable st
+# MEDIUM_STATEFUL_SETS_PER_NAMESPACE: 0 
+# SMALL_DEPLOYMENTS_PER_NAMESPACE: 10 # 10 small deployments per namespace → 500 total
+# BIG_DEPLOYMENTS_PER_NAMESPACE: 0 # disable big deployments
+# MEDIUM_DEPLOYMENTS_PER_NAMESPACE: 0 # disable medium deployments
+# SMALL_JOBS_PER_NAMESPACE: 10 # 10 small jobs per namespace → 500 total
+# BIG_JOBS_PER_NAMESPACE: 0 # disable big jobs
+# MEDIUM_JOBS_PER_NAMESPACE: 0 # disable medium jobs
+# CL2_RATE_LIMIT_POD_CREATION: false
+# LOAD_TEST_THROUGHPUT: 400
+# RANDOM_SCALE_FACTOR: 0
+# DELETE_TEST_THROUGHPUT: 400
