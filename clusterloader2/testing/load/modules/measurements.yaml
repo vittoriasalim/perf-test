@@ -277,6 +277,52 @@ steps:
         query: quantile_over_time(0.99, sum by (group, resource) (apiserver_resource_size_estimate_bytes / 1024 / 1024)[%v:])
       - name: max
         query: max_over_time(sum by (group, resource) (apiserver_resource_size_estimate_bytes / 1024 / 1024)[%v:])
+  - Identifier: EtcdMetrics Cluster Database Size
+    Method: GenericPrometheusQuery
+    Params:
+      action: {{$action}}
+      metricName: "EtcdMetrics"
+      metricVersion: v1
+      unit: bytes
+      queries:
+        # 1-minute bucket over 1h window
+        - name: apiserver_storage_size_1m_min
+          query: "min_over_time(apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        - name: apiserver_storage_size_1m_avg
+          query: "avg_over_time(apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        - name: apiserver_storage_size_1m_p50
+          query: "quantile_over_time(0.50, apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        - name: apiserver_storage_size_1m_p90
+          query: "quantile_over_time(0.90, apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        - name: apiserver_storage_size_1m_p99
+          query: "quantile_over_time(0.99, apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        - name: apiserver_storage_size_1m_max
+          query: "max_over_time(apiserver_storage_size_bytes[1h:1m])"
+          requireSamples: false
+        # 5-minute bucket over 1h window
+        - name: apiserver_storage_size_5m_min
+          query: "min_over_time(apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_avg
+          query: "avg_over_time(apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_p50
+          query: "quantile_over_time(0.50, apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_p90
+          query: "quantile_over_time(0.90, apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_p99
+          query: "quantile_over_time(0.99, apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
+        - name: apiserver_storage_size_5m_max
+          query: "max_over_time(apiserver_storage_size_bytes[1h:5m])"
+          requireSamples: false
 - module:
     path: modules/dns-performance-metrics.yaml
     params:

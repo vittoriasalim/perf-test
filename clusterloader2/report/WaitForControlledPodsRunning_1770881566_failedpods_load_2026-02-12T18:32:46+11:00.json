@@ -1,0 +1,65 @@
+[
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-4vffw",
+    "host": "aks-userpool3-19928941-vmss000055",
+    "status": "PendingScheduled"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-dd6f5",
+    "host": "aks-userpool6-12749959-vmss0000a9",
+    "status": "PendingScheduled"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-fwm75",
+    "host": "aks-userpool4-17251880-vmss000005",
+    "status": "Terminating"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-btn9q",
+    "host": "aks-userpool10-29231347-vmss000076",
+    "status": "PendingScheduled"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-s52pf",
+    "host": "aks-userpool10-29231347-vmss0000cq",
+    "status": "Terminating"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-9q4zf",
+    "host": "aks-userpool6-12749959-vmss0000a9",
+    "status": "Terminating"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-7mknp",
+    "host": "aks-userpool3-19928941-vmss0000jg",
+    "status": "Terminating"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-4hds6",
+    "host": "aks-userpool4-17251880-vmss0000d8",
+    "status": "Terminating"
+  },
+  {
+    "namespace": "test-2iriwe-1",
+    "controlledBy": "test-2iriwe-1/daemonset-0",
+    "name": "daemonset-0-qvk7t",
+    "host": "aks-userpool4-17251880-vmss0000io",
+    "status": "Terminating"
+  }
+]

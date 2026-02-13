@@ -93,12 +93,12 @@ tuningSets:
 # Uniform5qps: for each running phase, use 5 qps.
 - name: Uniform5qps
   qpsLoad:
-    qps: 5
+    qps: 2000
 # default is a tuningset that is meant to be used when we don't have any specific requirements on pace of operations.
 - name: default
   globalQPSLoad:
-    qps: {{$defaultQps}}
-    burst: 1
+    qps: 2000
+    burst: 4000
 - name: RandomizedSaturationTimeLimited
   RandomizedTimeLimitedLoad:
     timeLimit: {{$saturationTime}}s
